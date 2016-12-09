@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+#box {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100px;
+	height: 100px;
+	background-color: #00BFFF;
+	border: 2px solid #1284B8;
+}
+div {
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	background-color: red;
+}
+span {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	background-color: yellow;
+}
+</style>
+</head>
+<body>
+	<div id="box"></div>
+	<div><span></span></div>
+	
+<script src="JS/publicMain.js"></script>
+<script>
+/*var div  = document.getElementsByTagName('div')[1],
+span  = document.getElementsByTagName('span')[0];*/
+
+var startX = 0,
+	startY = 0;
+/*var old = getColor(div,'backgroundColor');
+var spanColor = getColor(span,'backgroundColor');
+div.onclick = function (){
+	div.style.backgroundColor = old;
+}
+span.onclick = function (ev){
+	var ev = ev || event;
+	ev.cancelBubble = true;
+	div.style.backgroundColor = spanColor;
+}*/
+	
+/*function getColor (obj,attr){
+	return obj.currentStyle? obj.currentStyle[attr]: getComputedStyle(obj)[attr];
+}*/
+window.onload = function (){
+	var oBox = document.getElementById('box');
+	oBox.onmousedown = function(ev) {
+		var ev = ev || event;
+		startX = ev.clientX,
+		startY = ev.clientY;
+			
+		var oTop = css(oBox,'top'),
+			oLeft = css(oBox,'left');
+		document.onmousemove = function (ev){
+			var ev = ev || event;
+			var x = ev.clientX - startX + oLeft,
+				y = ev.clientY - startY + oTop;
+			x<=0? x=0: '';
+			y<=0? y=0: '';
+			console.log(window.innerWidth,oBox.offsetWidth);
+			x>=window.innerWidth-oBox.offsetWidth? x=window.innerWidth-oBox.offsetWidth: '';
+			y>=window.innerHeight-oBox.offsetHeight? y=window.innerHeight-oBox.offsetHeight: '';
+			css(oBox,'top',y);
+			css(oBox,'left',x);
+		}
+		document.onmouseup = function(){
+			document.onmousemove = null;
+			document.onmouseup = null;
+		}
+		return false;
+	}
+}
+</script>
+</body>
+</html>

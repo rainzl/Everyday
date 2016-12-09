@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+body {
+	text-align: center;
+}
+input {
+	margin-top: 20px;
+	width: 80px;
+	height: 50px;
+	font: bold 20px/50px arial;
+}
+input:nth-of-type(1) {
+	color: green;
+}
+input:nth-of-type(2) {
+	color: red;
+}
+#wrap {
+	margin: 30px auto;
+	position: relative;
+	width: 800px;
+	height: 600px;
+	border: 10px solid #B0E0E6;
+	overflow: hidden;
+}
+#wrap div {
+	position: absolute;
+	bottom: -52px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+.red {
+	background-color: red;
+	border: 1px solid #7C7C7C;
+}
+.blue {
+	background-color: dodgerblue;
+	border: 1px solid #1E90FF;
+}
+.grey {
+	background-color: grey;
+	border: 1px solid #483D8B;
+}
+.pink {
+	background-color: pink;
+	border: 1px solid #D0C6C6;
+}
+.yellow {
+	background-color: yellow;
+	border: 1px solid #21C618;
+}
+.green {
+	background-color: limegreen;
+	border: 1px solid #FCFF00;
+}
+</style>
+<script src="../publicJS/Js1_publicMove.js"></script>
+<script>
+var arr = ['red','blue','grey','pink','yellow','green'];
+	window.onload = function () {
+		var oWrap = document.getElementById('wrap');
+		var oWrapWid = parseFloat(getStyle(oWrap,'width'))-52;
+		var oWrapHei = parseFloat(getStyle(oWrap,'height'));
+		var str = '';
+		for ( var i=0; i<20; i++ ) {
+			str += '<div class="'+ arr[i%arr.length] +'"></div>';
+		}
+		oWrap.innerHTML = str;
+		
+		var aBtns = document.getElementsByTagName('input');
+		//获取每个需要移动的元素
+		var aDivs = oWrap.getElementsByTagName('div');
+		var timer = 0;
+		aBtns[0].onclick = function () {
+			for ( var i=0,len=aDivs.length; i<len; i++ ) {
+				var left = parseInt(Math.random()*oWrapWid);
+				var ele = aDivs[i];
+				getStyle(aDivs[i],'left',left);
+				
+				fnTime(aDivs[i]);
+				
+				function fnTime(ele) {
+					timer = setInterval(
+						function (){
+							setTimeout(
+								function () {
+									getStyle(ele,'bottom',-52);
+									mTween(ele,'bottom',oWrapHei,'2000','linear');
+								},parseInt(Math.random()*2000)
+							);
+						},2000
+					);
+					console.log(timer);
+				}
+			}
+			aBtns[1].onclick = function () {
+				clearInterval(timer);
+			}
+		}
+		
+	}
+</script>
+</head>
+<body>
+	<input type="button" value="start" />
+	<input type="button" value="stop" />
+	<section id="wrap">
+	</section>
+</body>
+</html>

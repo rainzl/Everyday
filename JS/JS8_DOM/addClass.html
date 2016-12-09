@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+.wrap {
+	width: 200px;
+	height: 200px;
+	background-color: #666666;
+}
+.margin {
+	display: inline-block;
+	border: 1px solid red;
+	padding: 50px;
+	margin: 50px auto;
+}
+
+</style>
+</head>
+<body>
+	<section id="wrap" ></section>
+<script>
+var oWrap = document.getElementById('wrap');
+//addClass(oWrap,'margin');
+subClass(oWrap,'wrap');
+function addClass( obj,className ){
+	if ( obj.className ) {
+		
+		var arrClass = obj.className.split(' ');
+		
+		console.log(arrClass.indexOf(className));
+		if ( arrClass.indexOf(className) == -1 ) {
+			obj.className += ' ' +className;
+		}
+	} else {
+		obj.className = className;
+	}
+}
+function subClass( obj,className ) {
+	if ( obj.className ) {
+		var arrClass = obj.className.split(' ');
+		if ( arrClass.indexOf(className) != -1 ) {
+			for ( var i=0; i<arrClass.length; i++ ) {
+				if ( arrClass[i] == className ) {
+					arrClass.splice(i,1);
+				}
+			}
+		} 
+		obj.className = arrClass.join(' ');
+	}
+}
+function indexOfClass(arr,className) {
+	arr.indexOf(className);
+	/*for ( var i=0; i<arr.length; i++ ) {
+		if ( arr[i] == className ) {
+			return true;
+		} else {
+			return -1;
+		}
+	}*/
+}
+</script>
+</body>
+</html>

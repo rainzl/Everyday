@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+#box {
+	position: absolute;
+	top: 50px;
+	left: 10px;
+	width: 100px;
+	height: 100px;
+	background-color: #00BFFF;
+} 
+</style>
+<script type="text/javascript">
+	window.onload = function () {
+		var aBtn = document.getElementsByTagName('input');
+		var oDiv = document.getElementById('box');
+		
+		aBtn[0].onclick = function () {
+			fnMove( oDiv, 10, 800, 'left', 
+				function (){
+					fnMove(oDiv, 10, 600, 'top')
+				} 
+			);
+		}
+		aBtn[1].onclick = function () {
+			fnMove( oDiv, 10, 50, 'top', 
+				function (){
+					fnMove(oDiv, 10, 10, 'left')
+				} 
+			);
+		}
+			
+		function fnMove( obj, dir, target, attr, fnEnd ) {
+			dir = parseInt(getStyle(obj,attr)) < target? dir: -dir;
+			
+			timer = setInterval( 
+				function(){
+					console.log(parseInt(getStyle(obj,attr)));
+					speed = parseInt(getStyle(obj,attr)) + dir;
+					if ( speed < target && dir < 0 || speed > target && dir > 0 ) {
+						speed = target;
+					}
+					oDiv.style[attr] = speed + 'px';
+					
+					if (speed == target) {
+						clearInterval(timer);
+						fnEnd && fnEnd();
+					}
+				},80
+			);
+			
+		}
+		function getStyle(obj,attr){
+			return obj.currentStyle? obj.currentStyle[attr]: getComputedStyle(obj)[attr];
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="button" value="前进" />
+	<input type="button" value="后退" />
+	<div id="box"></div>
+</body>
+</html>

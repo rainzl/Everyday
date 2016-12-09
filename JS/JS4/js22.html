@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<!--功能分析：
+1. 获取相关元素：两个按钮，两个图片位置元素，页脚，底部提示
+2. 点击上一组按钮，两组图片同时切换上一张，（切换方式：循环）
+3. 点击下一组按钮，两组图片同时切换下一张
+4. 分别点击左右两张图片，可以分别操作每一组切换下一张。-->
+<style>
+p {
+	margin: 0;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.wrap {
+	position: relative;
+	margin: 0 auto;
+	width: 1000px;
+	height: 520px;
+	background: url(text4/bg1.jpg) no-repeat;
+}
+#btn {
+	position: absolute;
+	width: 200px;
+	top: 35px;
+	left: 400px;
+}
+#img {
+	position: absolute;
+	width: 800px;
+	left: 100px;
+	top: 110px;
+}
+#title {
+	position: absolute;
+	width: 500px;
+	bottom: 130px;
+	left: 250px;
+	font: bold 16px/20px "宋体";
+}
+#footer {
+	position: absolute;
+	width: 800px;
+	bottom: 100px;
+	left: 100px;
+}
+</style>
+<script>
+	window.onload = function () {
+		var aBtn = document.querySelectorAll('#btn input');
+		var aImg = document.querySelectorAll('#img img');
+		var aTitle = document.querySelectorAll('#title span');
+		var aFooter = document.querySelectorAll('#footer p');
+		var aRrImgLeft = ['text4/l1.jpg','text4/l2.jpg','text4/l3.jpg','text4/l4.jpg'];
+		var aRrImgRight = ['text4/r1.jpg','text4/r2.jpg','text4/r3.jpg'];
+		var aRrImg = [];
+		
+		var numL = 0;
+		var numR = 0;
+		//初始化
+		//fnMain();
+		fnMain(0);
+		fnMain(1);
+		
+		aImg[0].onclick = function () {
+			nextL ();
+		}
+		aImg[1].onclick = function () {
+			nextR ();
+		}
+		aBtn[1].onclick = function () {
+			nextR ();
+			nextL ();
+		}
+		aBtn[0].onclick = function () {
+			prevL();
+			prevR();
+		}
+		function nextR () {
+			numR ++;
+			numR > aRrImgRight.length - 1? numR = 0: '';
+			fnMain(1);
+		}
+		function nextL () {
+			numL ++;
+			numL > aRrImgLeft.length - 1? numL = 0: '';
+			fnMain(0);
+		}
+		function prevR () {
+			numR --;
+			numR < 0? numR = aRrImgRight.length - 1: '';
+			fnMain(1);
+		}
+		function prevL () {
+			numL --;
+			numL < 0? numL = aRrImgLeft.length - 1: '';
+			fnMain(0);
+		}
+		function fnMain(i) {
+			var num = 0;
+			if ( i == 0 ) {
+				num = numL;
+				aRrImg = ['text4/l1.jpg','text4/l2.jpg','text4/l3.jpg','text4/l4.jpg'];
+			} else {
+				num = numR;
+				aRrImg = ['text4/r1.jpg','text4/r2.jpg','text4/r3.jpg'];
+			}
+			aImg[i].src = aRrImg[num];
+			aTitle[i].innerHTML = num + 1;
+			aFooter[i].innerHTML = (num + 1) + '/' + aRrImg.length;
+		}
+	}
+</script>
+</head>
+<body>
+	<section class="wrap">
+		<div id="btn">
+			<input class="left" type="button" value="上一组" />
+			<input class="right" type="button" value="下一组" />
+		</div>
+		<div id="img">
+			<img class="left" />
+			<img class="right"/>
+		</div>
+		<div id="title">
+			<p class="left">第一组第<span></span>张</p>
+			<p class="right">第二组第<span></span>张</p>
+		</div>
+		<div id="footer">
+			<p class="left"></p>
+			<p class="right"></p>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<script>
+	window.onload = function () {
+		var aInput = document.getElementsByTagName('input');
+		var aSelect = document.getElementsByTagName('select')[0];
+		var num = 0;
+		aInput[2].onclick = function () {
+			vNum0 = aInput[0].value/1;
+			vNum1 = aInput[1].value/1;
+			vSel =  aSelect.value;
+			
+			switch (vSel) {
+				case '+':
+					num = vNum0 + vNum1;
+					break;
+				case '-':
+					num = vNum0 - vNum1;
+					break;
+				case '*':
+					num = vNum0 * vNum1;
+					break;
+				case '/':
+					num = vNum0 / vNum1;
+					break;
+				case '%':
+					num = vNum0 % vNum1;
+					break;
+				default:
+					'';
+			}
+			aInput[3].value = num;
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="text" />
+	<select>
+		<option>+</option>
+		<option>-</option>
+		<option>*</option>
+		<option>/</option>
+		<option>%</option>
+	</select>
+	<input type="text" />
+	<input type="button" value="=" />
+	<input type="text" />
+</body>
+</html>

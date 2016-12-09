@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+	<!--nav start-->
+	<header class="wrap">
+		<div id="header" class="clear">
+			<h1 class="left">妙味课堂</h1>
+			<div class="right headR">
+				<ul id="nav" class="left">
+					<li class="active">
+						<a href="#">Motions</a><canvas width="0" height="0"></canvas>
+					</li>
+					<li>
+						<a href="#">Developers</a><canvas width="0" height="0"></canvas>
+					</li>
+					<li>
+						<a href="#">About</a><canvas width="0" height="0"></canvas>
+					</li>
+				</ul>
+				<div id="otherBtn" class="right">
+					<form class="search">
+						<span><i>搜索</i></span>
+						<input class="show" type="text" placeholder="Type to Search" />
+						<em class="searchClose"><i></i></em>
+					</form>
+					<span class="helpBtn"><i>帮助</i></span>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!--nav end-->
+	<section class="wrap">
+		<div id="zbjListC">
+			<canvas id="canvas"></canvas>
+			<div class="zbjlistA">
+				<a></a>
+				<a></a>
+			</div>
+		</div>
+	</section>
+	<div id="switchPage">
+		<span class="prev"><i></i></span>
+		<p><i class="numP">1</i>/<em>11</em></p>
+		<span class="next"><i></i></span>
+	</div>
+	<div id="help">
+		<span class="helpClose"><i></i></span>
+		<div class="keyTable">
+			<div class="keyCell">
+				<div class="swipeDom">
+					<i></i>
+					<p>Swipe for next/prev on touch screen</p>
+				</div>
+				<ul class="keyDom">
+					<li>
+						<p class="keyIcon"><i class="keyF"></i></p>
+						<p>Full screen (if supported)</p>
+					</li>
+					<li>
+						<p class="keyIcon"><i class="keyV"></i></p>
+						<p>Volume on/off (if supported)</p>
+					</li>
+					<li>
+						<p class="keyIcon"><i class="keyS"></i></p>
+						<p>Search</p>
+					</li>
+					<li>
+						<p class="keyIcon"><i class="keyUp"></i><i class="keyDown"></i></p>
+						<p>Next/Prev on the list</p>
+					</li>
+					<li>
+						<p class="keyIcon"><i class="keyLeft"></i><i class="keyRight"></i></p>
+						<p>Next/Prev on the view</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+<script>
+	var data = [
+	'img/3.jpg',
+	['pink','green','blue','yellow'],
+	'JORDAN COELHO',
+	'CAT GOOGLE SANTA TRAT'
+	]
+</script>
+<script src="js/publicMain.js"></script>
+<script src="js/main.js"></script>
+<!--<script src="js/wss_canvas-02.js"></script>-->
+<script src="js/index-wxg03.js"></script>
+</body>
+</html>

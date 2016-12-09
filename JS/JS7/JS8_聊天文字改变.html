@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+body {
+	margin: 0;
+	background-color: #ccc;
+}
+textarea {
+	resize: none;
+}
+#wrap {
+	margin: 50px auto;
+	padding: 38px 30px;
+	width: 500px;
+	height: 300px;
+	background: url(img8/bg1.jpg) no-repeat;
+	background-size: 600px 360px;
+}
+#wrap article {
+	width: 500px;
+	height: 160px;
+	border: 1px solid #808080;
+	overflow: auto;
+	background-color: #fff;
+}
+#wrap article div {
+	overflow: hidden;
+}
+#wrap article span {
+	float: left;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	font: 20px/50px "宋体";
+	background: url(img8/1.jpg);
+}
+#wrap select {
+	margin: 5px 0;
+	width: 120px;
+	height: 26px;
+	border-color: #ccc;
+	background-color: #D7EFFE;
+	font: bold 16px/26px "宋体";
+	border-radius: 5px;
+	color: #666666;
+}
+#wrap textarea {
+	padding: 0;
+	width: 500px;
+	height: 60px;
+}
+#wrap input {
+	float: right;
+	width: 80px;
+	height: 30px;
+	font: 18px/30px "宋体";
+}
+</style>
+</head>
+<body>
+	<section id="wrap">
+		<article>
+			<!--<div><span>今</span><span>天</span><span>休</span><span>息</span></div>-->
+		</article>
+		<select>
+			<!--<option>气球字体</option>
+			<option>气泡字体</option>
+			<option>心形字体</option>-->
+		</select>
+		<textarea></textarea>
+		<input type="button" value="确定" />
+	</section>
+<script type="text/javascript" src="JS/publicMain.js" ></script>
+<script>
+var imgJs = {
+	'气球字体':'img8/1.jpg',
+	'气泡字体':'img8/2.jpg',
+	'心形字体':'img8/3.jpg'
+};
+var oAricle = getEle('#wrap article');
+var oSelect = getEle('#wrap select');
+var oText = getEle('#wrap textarea');
+var oIput = getEle('#wrap input');
+//加载页面中的内容
+var strTemp = '';
+for ( var s in imgJs ) {
+	strTemp += `<option>${s}</option>`;
+}
+oSelect.innerHTML = strTemp;
+
+oIput.onclick = function () {
+	if ( oText.value.trim().length == '' ) {
+		alert('输入框不能为空');
+		oText.value = '';
+		return;
+	}
+	var arrTemp = Array.from(oText.value);
+	var textType = oSelect.value;
+	var arr = [];
+	arr.push('<div>');
+	arrTemp.forEach(function(item,i){
+		arr.push('<span style="background:url('+imgJs[textType]+') no-repeat;">'+item+'</span>');
+	});
+	arr.push('</div>');
+	oAricle.innerHTML += arr.join('');
+	oText.value = '';
+}
+
+
+</script>
+</body>
+</html>

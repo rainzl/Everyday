@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+li {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50px;
+	height: 50px;
+	background-color: green;
+	z-index: 1;
+}
+#div1 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100px;
+	height: 100px;
+	background-color: #02A4C7;
+	z-index: 1;
+}
+#div2 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100px;
+	height: 100px;
+	background-color: orange;
+	z-index: 1;
+}
+#wrap .c1 {
+	background-color: #0000FF;
+}
+</style>
+</head>
+<body>
+	<section id="wrap">
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<div id="div1"></div>
+		<div id="div2"></div>
+	</section>
+<script src="JS/publicMain.js"></script>
+<script>
+(function(d){
+	var box1 = d.getElementById('div1');
+	var box2 = d.getElementById('div2');
+	
+	drag({
+		obj1:box1,
+		obj2:box2,
+		trueFn:removeColor,
+		falseFn:addColor
+	});
+	drag({
+		obj1:box2,
+		obj2:box1,
+		trueFn:removeColor,
+		falseFn:addColor
+	});
+	function removeColor(obj1,obj2) {
+		obj1.className = '';
+		
+		obj2.style.zIndex = 1;
+	}
+	function addColor(obj1,obj2) {
+		obj1.className = 'c1';
+		obj2.style.zIndex = 20;
+	}
+	
+})(document)
+</script>
+</body>
+</html>

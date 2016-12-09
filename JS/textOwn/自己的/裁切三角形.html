@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/miaov.js"></script>
+		<style>
+		body {
+		    width: 100%;
+		    height: 100%;
+		    padding: 0;
+		    margin:0;
+		  }
+		  #box {
+		  	width: 854px;
+		  	height: 581px;
+		  	position: relative;
+		  	background: #999;
+		  }
+		  #box div {
+		  	position: absolute;
+		  	left: 0;
+		  	top: 0;
+		  	width: 854px;
+		  	height: 581px;
+		  	}
+		  .bizi {
+		    background-color: #fdd24b;
+		    -webkit-clip-path: polygon(22.7% 22.3%, 28.2% 19.6%, 29.4% 24.1%);
+		  }
+		   .zuicun {
+		    background-color: #fedd47;
+		    -webkit-clip-path: polygon(22.7% 22.3%, 29.3% 24%, 23.3% 29.4%);
+		  }
+		  .leftyan {
+		    background-color: #f1c838;
+		    -webkit-clip-path: polygon(23.3% 29.4%, 33.3% 20.4%, 34.5% 41.7%);
+		  }
+		  .xiae {
+		    background-color: #cdaa25;
+		    -webkit-clip-path: polygon(23.3% 29.4%, 34.5% 41.7%, 25.4% 35.1%);
+		    transition: .2s;
+		  }
+		 .xiae1 {
+		    background-color: #cdaa25;
+		    -webkit-clip-path: polygon(23.3% 29.4%, 34.5% 41.7%, 25.4% 40.1%);
+		    transition: .2s;
+		  }
+		  .rightyan {
+		    background-color: #e4ba2d;
+		    -webkit-clip-path: polygon(33.3% 20.4%, 42.6% 32.0%, 34.5% 41.7%);
+		  }
+		  .meitou {
+		    background-color: #f3e567;
+		    -webkit-clip-path: polygon(28.2% 19.6%, 29.4% 24.1%, 33.3% 20.4%);
+		  }
+		  .touding {
+		    background-color: #fff88b;
+		    -webkit-clip-path: polygon(28.2% 19.6%, 34.3% 16.9%, 38.9% 21.2%);
+		  }
+		  .meimao {
+		    background-color: #fdd24b;
+		    -webkit-clip-path: polygon(33.3% 20.4%, 38.9% 21.2%, 42.6% 32.0%);
+		  }
+		  .houbo {
+		    background-color: #f0ea75;
+		    -webkit-clip-path: polygon(38.9% 21.2%, 42.6% 32.0%, 56.9% 35.3%);
+		  }
+		  .yanbottom {
+		    background-color: #2b2424;
+		    -webkit-clip-path: polygon(29.2% 27.9%, 31.8% 31.8%, 36.1% 31.2%);
+		  }
+		  .yanbottom1 {
+		    background-color: #2b2424;
+		    -webkit-clip-path: polygon(29.2% 27.9%, 31.8% 29.8%, 36.1% 31.2%);
+		  }
+		  .yantop {
+		    background-color: #3a393b;
+		    -webkit-clip-path: polygon(29.2% 27.9%, 32.8% 26.7%, 36.1% 31.2%);
+		  }
+		 .yantop1 {
+		    background-color: #3a393b;
+		    -webkit-clip-path: polygon(29.2% 27.9%, 32.8% 30.7%, 36.1% 31.2%);
+		  }
+		  .yanguang {
+		    background-color: #fff;
+		    -webkit-clip-path: polygon(30.8% 27.7%, 31.8% 27.7%, 31.4% 28.6%);
+		  }
+		  .yanpileft {
+		    background-color: #f4e281;
+		    -webkit-clip-path: polygon(33.4% 21.7%, 29.2% 27.9%, 32.8% 26.7%, 36.1% 31.2%);
+		  }
+		  .jianbang {
+		    background-color: #f9e049;
+		    -webkit-clip-path: polygon(42.6% 32.0%, 56.9% 35.3%,52.9% 52.3%);
+		  }
+		   .jingzhong {
+		    background-color: #fac932;
+		    -webkit-clip-path: polygon(42.6% 32.0%, 34.5% 41.7%, 42.8% 46.1%);
+		  }
+		  .jingqian {
+		    background-color: #fbd944;
+		    -webkit-clip-path: polygon(34.5% 41.7%, 42.8% 46.1%, 37.3% 50.4%);
+		    transition: 1s;
+		  }
+		  .datui {
+		    background-color: #f0ea78;
+		    -webkit-clip-path: polygon(49.4% 59.6%,42.8% 46.1%, 37.3% 50.4%);
+		  }
+		  .shangshen {
+		    background-color: #fed63c;
+		    -webkit-clip-path: polygon(42.6% 32.0%,52.9% 52.3%, 46.2% 53%, 42.8% 46.1% );
+		  }
+		 .houbei {
+		    background-color: #feee71;
+		    -webkit-clip-path: polygon( 56.9% 35.3%,52.9% 52.3%,69.3% 59.9%);
+		  }
+		  .tuigen {
+		    background-color: #f4d24b;
+		    -webkit-clip-path: polygon(52.9% 52.3%,69.3% 59.9%,53.6% 67.6%);
+		  }
+		  .duzi {
+		    background-color: #e6bf2c;
+		    -webkit-clip-path: polygon(52.9% 52.3%,53.6% 67.6%,48.4% 60.9%,49.4% 59.6%,46.2% 53%);
+		  }
+		  .dupi {
+		    background-color: #715510;
+		    -webkit-clip-path: polygon(53.6% 67.6%,48.4% 60.9%,46.7% 63.8%);
+		  }
+		  .houtui {
+		    background-color: #c2a835;
+		    -webkit-clip-path: polygon(49.4% 59.6%,41.0% 73.7%,36.5% 71.2%);
+		  }
+		  .qiantui {
+		    background-color: #dac83d;
+		    -webkit-clip-path: polygon(49.4% 59.6%,45.0% 56.3%,36.5% 71.2%);
+		  }
+		  .shangdupi {
+		    background-color: #715510;
+		    -webkit-clip-path: polygon(45.0% 56.3%,42.6% 60.3%,39.0% 51.8%);
+		  }
+		  .houdatui {
+		    background-color: #fade47;
+		    -webkit-clip-path: polygon(69.3% 59.9%,53.6% 67.6%,56% 80.7%);
+		  }
+		  .houxiaotui {
+		    background-color: #faca3d;
+		    -webkit-clip-path: polygon(56% 80.7%,63.9% 68%,78.1% 70.2%);
+		  }
+		  .jiaozhang {
+		    background-color: #fddc5c;
+		    -webkit-clip-path: polygon(78.1% 70.2%,67.8% 84%,59.8% 82.3%);
+		  }
+		  .shuyeshang {
+		    background-color: #3b6f4b;
+		    -webkit-clip-path: polygon(21.6% 65.2%,58.1% 63.7%,82.1% 85.4%);
+		  }
+		  .shuyexia {
+		    background-color: #4e9f73;
+		    -webkit-clip-path: polygon(21.6% 65.2%,50.5% 87.2%,82.1% 85.4%);
+		  }
+		  .houyuiyin {
+		    background-color: #000;
+		    -webkit-clip-path: polygon(53.1% 83.4%,59.8% 82.3%,67.8% 84%);
+		  }
+		  .qianyuiyin {
+		    background-color: #000;
+		    -webkit-clip-path: polygon(42.8% 70.4%,49.3% 71.4%,41.3% 73.3%);
+		  }
+		  .qianyuiyinqian {
+		    background-color: #000;
+		    -webkit-clip-path: polygon(42.8% 70.4%,49.3% 71.4%,41.3% 73.3%);
+		  }
+		  .qianyuiyinhou {
+		    background-color: #000;
+		    -webkit-clip-path: polygon(36.4% 71.2%,32.7% 69.2%,37.3% 69.8%);
+		  }
+		  .shuyeyin {
+		    background-color: #1d3246;
+		    -webkit-clip-path: polygon(21.6% 65.2%,27% 69.5%,24.8% 77.7%);
+		  }
+		  strong {
+		  	position: absolute;
+		  	left: 0;
+		  	top: 0;
+		  	width: 854px;
+		  	height: 581px;
+		  	background: transparent;
+		  	background: -webkit-radial-gradient(44.4% 83%,13.3% 6.4%,#43395e 10%,#675694 100%);
+		  }
+		</style>
+	</head>
+	<body style="height: 2000px;">
+		<div id="box">
+			<strong></strong>
+			<span></span>
+			<div class="shuyeshang"></div>
+			<div class="shuyexia"></div>
+			<div class="bizi"></div>
+		  	<div class="zuicun"></div>
+		  	<div class="leftyan"></div>
+		  	<div class="rightyan"></div>
+		  	<div class="meitou"></div>
+		  	<div class="touding"></div>
+		  	<div class="meimao"></div>
+		  	<div class="houbo"></div>
+		  	<div class="xiae"></div>
+		  	<div class="yanbottom"></div>
+		  	<div class="yantop"></div>
+		  	<script>
+		  		(function(){
+		  			var yantop = document.getElementsByClassName("yantop")[0];
+		  			var yanbottom = document.getElementsByClassName("yanbottom")[0];
+			  		var timer = 0;
+					timer = setInterval(function(){
+						yantop.className = "yantop1";
+						yanbottom.className = "yanbottom1";
+						setTimeout(function(){
+						yantop.className = "yantop";	
+						yanbottom.className = "yanbottom";
+						},100);
+					},3000);
+		  		})();
+		  	</script>
+		  	<div class="yanguang"></div>
+		  	<div class="yanpileft"></div>
+		  	<div class="jianbang"></div>
+		  	<div class="jingzhong"></div>
+		  	<div class="jingqian"></div>
+		  	<div class="datui"></div>
+		  	<div class="shangshen"></div>
+		  	<div class="houbei"></div>
+		  	<div class="tuigen"></div>
+		  	<div class="duzi"></div>
+		  	<div class="dupi"></div>
+		  	<div class="houtui"></div>
+		  	<div class="qiantui"></div>
+		  	<div class="shangdupi"></div>
+		  	<div class="houdatui"></div>
+		  	<div class="houxiaotui"></div>
+		  	<div class="jiaozhang"></div>
+		  	<div class="houyuiyin"></div>
+		  	<div class="qianyuiyinqian"></div>
+		  	<div class="qianyuiyinhou"></div>
+		  	<div class="shuyeyin"></div>
+		  	<div class="shape22"></div>
+		  	<div class="shape22"></div>
+		  	<div class="shape22"></div>
+		  	<div class="shape22"></div>
+		</div>
+		<script>
+			(function(){
+				var xiae = document.getElementsByClassName("xiae")[0];
+				var timer = 0;
+				var n = 0;
+				timer = setInterval(function(){
+					xiae.className = "xiae1";
+					setTimeout(function(){
+					xiae.className = "xiae";	
+					},100);
+				},3000);
+			})();
+		</script>
+	</body>
+</html>

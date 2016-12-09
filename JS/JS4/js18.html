@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+li {
+	float: left;
+	margin: 20px 30px;
+}
+</style>
+<!--1. 点击文字，选中对应的input选框-->
+<script>
+	window.onload = function () {
+		var aLi = document.querySelectorAll('#form li');
+		var aInput = document.querySelectorAll('#form input');
+		var num = 0;
+		for ( i=0; i<aLi.length; i++ ) {
+			aLi[i].index = i;
+			aInput[num].checked = true;
+			aLi[i].onclick = function () {
+				aInput[num].checked = false;
+				aInput[this.index].checked = true;
+				num = this.index;
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<form>
+		<!--<input type="radio" value="男" name="id" id="boy" /><label for="boy">男</label>
+		<input type="radio" value="女" name="id" id="girl" /><label for="girl">女</label>
+		<input type="radio" value="保密" name="id" id="none" /><label for="none">保密</label>-->
+		<ul id="form">
+			<li><input type="radio" />男</li>
+			<li><input type="radio" />女</li>
+			<li><input type="radio" />保密</li>
+		</ul>
+	</form>
+</body>
+</html>

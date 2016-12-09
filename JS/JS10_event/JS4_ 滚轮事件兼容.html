@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+<script>
+(function(){
+	
+	myWheel(document,fn);
+	
+	function fn(o) {
+		if (o) {
+			alert('上')
+		} else {
+			alert('下')
+		}
+	}
+	
+	function myWheel(obj,callBack) {
+		
+		obj.addEventListener('DOMMouseScroll',fnScorll);
+		obj.addEventListener('mousewheel',fnScorll);
+		function fnScorll(ev) {
+			var ev = ev || event;
+			var down = true;
+			console.log(1);
+			if (ev.wheelDelta) {
+				down = ev.wheelDelta > 0? true: false;
+			} else {
+				down = ev.detail < 0? true: false;
+			}
+			if ( callBack && typeof callBack === 'function' ) {
+				callBack(down);
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*if ( window.navigator.userAgent.toLowerCase().indexOf('firefox') != -1 ) {
+		window.addEventListener('DOMMouseScroll',fn);
+	} else {
+		window.addEventListener('mousewheel',fn);
+	}
+	function fn(ev) {
+		var ev = ev || event;
+		var down = true;
+		if ( ev.wheelDelta ) {
+			down = ev.wheelDelta > 0? true: false;
+		} else {
+			down = ev.detail < 0? true: false;
+		}
+		
+		if ( down ) {
+			alert('上');
+		} else {
+			alert('下');
+		}
+	}*/
+})()
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<style>
+	body{ margin: 0;padding: 0; background: #444444;}
+	#body{ width: 1000px; height: 520px; background: url(bg1.jpg); margin: 20px auto; position: relative;}
+	input{ border-radius:3px; border: none; padding: 8px 30px; background: #f6d587; cursor: pointer;}
+	img{ border: none; vertical-align: top;  width: 350px; height: 255px; background: url(../text3/loader_ico.gif) no-repeat center center;}
+	#prev{ position: absolute; top: 35px; left: 330px; }
+	#next{ position: absolute; top: 35px; right: 333px;}
+	#right{ width: 350px; height: 305px; position: absolute; top: 110px; left: 115px;}
+	#right img{background: #f6f7df;}
+	#right strong{ position: absolute; bottom: 15px; left: 120px;}
+	#right span{ position: absolute; bottom: 0px;  left: -5px;}
+	#left{ width: 350px; height: 305px; position: absolute; top: 110px; right: 115px;}
+	#left img{ background: #f7dfe8 }
+	#left strong{ position: absolute; bottom: 15px; left: 120px;}
+	#left span{ position: absolute; bottom: 0; right: -5px;}
+	.btn_active{ background: #e0b03d;}
+	</style>
+	<script>
+	window.onload = function (){
+		var oPrev = document.getElementById('prev');
+		var oNext = document.getElementById('next');
+		var oRight = document.getElementById('right');
+		var oRimg = oRight.getElementsByTagName('img')[0];
+		var oRstrong = oRight.getElementsByTagName('strong')[0];
+		var oRspan = oRight.getElementsByTagName('span')[0];
+		var oLeft = document.getElementById('left');
+		var oLimg = oLeft.getElementsByTagName('img')[0];
+		var oLstrong = oLeft.getElementsByTagName('strong')[0];
+		var oLspan = oLeft.getElementsByTagName('span')[0];
+		var aRleft = [ 'r1.jpg','r2.jpg','r3.jpg' ];
+		var aRright = [ 'l1.jpg','l2.jpg','l3.jpg','l4.jpg' ]
+		var rNum = 0;
+		var lNum = 0;
+		var onOffM = 1;
+		
+		fnContent( oRimg,aRright,rNum,oRstrong,oRspan,'一');
+		fnContent( oLimg,aRleft,lNum,oLstrong,oLspan,'二');
+		
+		oPrev.onclick = function () {
+			onOffM = 1;
+			fnMain();
+		}
+		oNext.onclick = function () {
+			onOffM = 2;
+			fnMain();
+		}
+		oRight.onclick = function () {
+			onOffM = 3;
+			fnMain();
+		}
+		oLeft.onclick = function () {
+			onOffM = 4;
+			fnMain();
+		}
+		
+		//根据每个按钮开关，判断需要控制的数组下标变化。
+		function fnMain() {
+			if ( onOffM == 1 ) {
+				rNum --;
+				lNum --;
+			} else if ( onOffM == 2 ) {
+				rNum ++;
+				lNum ++;
+			} else if ( onOffM == 3 ) {
+				rNum ++;
+			} else if ( onOffM == 4 ) {
+				lNum ++;
+			}
+			fnIf();
+			fnContent( oRimg,aRright,rNum,oRstrong,oRspan,'一');
+			fnContent( oLimg,aRleft,lNum,oLstrong,oLspan,'二');
+		}
+		
+		//循环判断方法
+		function fnIf() {
+			if ( rNum < 0 && lNum < 0 ) {
+				rNum = aRright.length - 1;
+				lNum = aRleft.length - 1;
+			} else if ( rNum > aRright.length - 1 && lNum > aRleft.length - 1 ) {
+				rNum = 0;
+				lNum = 0;
+			}else if ( rNum < 0 ) {
+				rNum = aRright.length - 1;
+			}else if ( rNum > aRright.length - 1 ) {
+				rNum = 0;
+			}else if ( lNum < 0 ) {
+				lNum = aRleft.length - 1;
+			} else if ( lNum > aRleft.length - 1 ) {
+				lNum = 0;
+			}
+		}
+		
+		//加载内容方法
+		function fnContent( img,aRr,aNum,strong,span,group) {
+			img.src = aRr[aNum];
+			strong.innerHTML = '第' + group + '组，第 ' + [ aNum + 1 ]+ '张';
+			span.innerHTML = aNum + 1 + '/' + aRr.length;
+		}
+		
+	
+	}
+	</script>
+	<body>
+		<div id="body">
+			<input id="prev" type="button" value="上一组" />
+			<input id="next"  type="button" value="下一组"/>
+			<div id="left">
+				<img src=""/>
+				<strong></strong>
+				<span></span>
+			</div>
+			<div id="right">
+				<img src="" />
+				<strong></strong>
+				<span></span>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+<script>
+function Test(name,age) {
+	this.name = name;
+	this.age = age;
+}
+/*Test.prototype.say = function() {
+	console.log('我叫'+this.name+',我今年'+this.age+'岁');
+}*/
+
+
+Object.prototype.say = function() {
+	console.log('我是object');
+}
+var ni = new Test('zhenhao','18');
+/*ni.say = function() {
+	console.log('我是函数自身');
+}*/
+console.log(ni);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>photos</title>
+	</head>
+	<style>
+	body,p,input{ margin: 0; padding: 0;}
+	body{ background: #000000;}
+	#warp{  width: 853px; margin: 100px auto; padding:20px; text-align: center; background: #FFFFFF;}
+	input{ font-size: 14px; padding: 5px 10px;margin: 20px; cursor: pointer;}
+	p{line-height: 30px; padding-bottom: 5px;}
+	.botall{ width: 843px;height: 630px;  border: 5px solid #B0B0B7; position: relative;}
+	.botall div{ width: 843px;position: absolute; background: black; filter:alpha( opacity:60); opacity: 0.5; color: #FFFFFF;  line-height: 30px;}	
+	#pic{ width: 843px; height: 630px; margin: 0 auto; border: none; position: absolute; top: 0; left: 0; background: url(1.gif) no-repeat center center; vertical-align: middle;}
+	#top{  top: 0; }
+	#botm{ bottom: 0; }
+	a{text-decoration: none; background: #B0B0B7; filter: alpha ( opacity:60); opacity: 0.6; padding: 30px;position: absolute; font-size: 30px; color: #FFFFFF; font-family:"宋体";}
+	a:hover{ text-decoration: none; filter: alpha ( opacity:90); opacity: 0.9;}
+	#prev{ top: 270px; left: 10px; }
+	#next{ top: 270px; right: 10px; }
+	</style>
+	<script>
+		window.onload = function () {
+			var oBtn1 = document.getElementById('btn1');
+			var oBtn2 = document.getElementById('btn2');
+			var oHint = document.getElementById('hint');
+			var oPic = document.getElementById('pic');
+			var oTop = document.getElementById('top');
+			var oBotm = document.getElementById('botm');
+			var oPrev = document.getElementById('prev');
+			var oNext = document.getElementById('next');
+			
+			var pArr = [ '048.JPG','049.JPG','050.JPG','056.JPG','057.JPG' ];
+			var bArr = [ '2012年夏（爸妈）','2012年夏（爸爸）','2012年夏（妈妈）','2012年夏（开心）','2012年夏（幸福）' ];
+			var num = 0;
+			//初始化
+			
+			loop();
+			oTop.innerHTML = num + 1 + '/' + pArr.length;
+			oBtn1.onclick = loop;
+			
+			function loop() {
+				oHint.innerHTML = '图片可以从第一张跳转到最后一张切换';
+				oNext.onclick = next1;
+				oPrev.onclick = prev1;
+				oBotm.innerHTML = bArr[num];
+			}
+			oBtn2.onclick = function () {
+				oHint.innerHTML = '图片只能到最后一张或只能到第一张';
+				oPrev.onclick = prev2;
+				oNext.onclick = next2;
+			}
+			
+			
+			function prev1 () {
+				num --;
+				if ( num == -1 ) {
+					num = pArr.length - 1;
+				}
+				
+				oPic.src = pArr[num];
+				oBotm.innerHTML = bArr[num];
+				oTop.innerHTML = [num + 1] + '/' + pArr.length;
+			}
+			function next1 () {
+				num ++;
+				if ( num == pArr.length ) {
+					num = 0;
+				}
+				oPic.src = pArr[num];
+				oBotm.innerHTML = bArr[num];
+				oTop.innerHTML = [num + 1] + '/' + pArr.length;
+			}
+			
+			function prev2 () {
+				num --;
+				if ( num == -1 ) {
+					alert( '这是第一张哦，前面没有啦！' );
+					num = 0;
+				} else {
+					oPic.src = pArr[num];	
+					oBotm.innerHTML = bArr[num];
+					oTop.innerHTML = [num + 1] + '/' + pArr.length;
+				}
+			}
+			function next2 () {
+				num ++;
+				if ( num == pArr.length ) {
+					alert( '已经是最后一张啦。' );
+					num = pArr.length - 1;
+				} else {
+					oPic.src = pArr[num];
+					oBotm.innerHTML = bArr[num];
+					oTop.innerHTML = [num + 1] + '/' + pArr.length;
+				}
+				
+			}
+			
+			
+	 	}
+	</script>
+	<body>
+		<div  id="warp">
+			<input id="btn1" type="button" value="循 环 切 换" />
+			<input id="btn2" type="button" value="顺 序 切 换" />
+			<p id="hint">图片只能到最后一张或只能到第一张</p>
+			<div class="botall">
+				<img id="pic" src="048.JPG" />
+				<div id="top">正在加载中……</div>
+				<div id="botm">正在加载中……</div>
+				<span>
+					<a id="prev" href="#script：；"><</a>
+				</span>
+				<span>
+					<a id="next" href="#script：；">></a>
+				</span>
+			</div>
+		</div>
+	</body>
+</html>
+ 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+.wrap {
+	position: absolute;
+	width: 1000px;
+	height: 600px;
+	text-align: center;
+	background-color: #ccc;
+}
+.wrap img {
+	width: 500px;
+	height: 384px;
+	position: absolute;
+}	
+</style>
+</head>
+<body>
+	<section class="wrap">
+		<img src="../../JS3/text3/1.jpg" />
+	</section>
+<script>
+var oWrap = document.getElementsByClassName('wrap')[0];
+var oImg = oWrap.children[0];
+var doc = document.documentElement;
+var wrapRect = oWrap.getBoundingClientRect();
+var imgRect = oImg.getBoundingClientRect();
+console.log(doc);
+oImg.style.left = (wrapRect.width - imgRect.width)/2 + 'px';
+oImg.style.top = (wrapRect.height - imgRect.height)/2 + 'px';
+oWrap.style.left = (doc.clientWidth - wrapRect.width)/2 + 'px';
+oWrap.style.top = (doc.clientHeight - wrapRect.height)/2 + 'px';
+</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+body {
+	overflow: hidden;
+}
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transition: 1s;
+}
+</style>
+</head>
+<body>
+	<ul id="ul">
+		<li class="one">第一屏</li>
+		<li class="two">第二屏</li>
+		<li class="three">第三屏</li>
+	</ul>
+</body>
+<script>
+var colors = ['pink','green','yellow'];
+(function(){
+	
+	
+	function Wheel(id) {
+		rander.call(this,id);
+	}
+	Wheel.prototype = new rander();
+	
+	Wheel.prototype.done = function (beal) {
+		beal? this.up(): this.down();
+	}
+	Wheel.prototype.up = function() {
+		this.num --;
+		this.num = this.num<0? 0: this.num;
+		this.obj.style.top = -this.num*this.H + 'px';
+	}
+	Wheel.prototype.down = function() {
+		this.num ++;
+		this.num = this.num>this.child.length-1? this.child.length-1: this.num;
+		this.obj.style.top = -this.num*this.H + 'px';
+	}
+	Wheel.prototype.wheel = function () {
+		var that = this;
+		this.obj.addEventListener('mousewheel',fnScroll);
+		this.obj.addEventListener('DOMMouseScroll',fnScroll);
+		function fnScroll(ev) {
+			var ev = ev || event;
+			that.done(that.scroll(ev));
+		}
+	}
+	Wheel.prototype.scroll = function (ev) {
+		var beal = null;
+		if ( ev.wheelDelta ) {
+			beal = ev.wheelDelta>0? true: false;
+		} else {
+			beal = ev.detail >0? false: true;
+		}
+		return beal;
+	}
+	function rander(id,tag) {
+		this.obj = document.getElementById(id);
+		this.child = null;
+		this.H = document.documentElement.clientHeight;
+		this.W = document.documentElement.clientWidth;
+		this.num = 0;
+		this.top = 0;
+	}
+	rander.prototype.init = function (tag) {
+		this.child = this.obj.getElementsByTagName(tag);
+		this.setStyle();
+	}
+	rander.prototype.setStyle = function () {
+		for ( var i=0; i<this.child.length; i++ ) {
+			this.child[i].style.cssText = 'width:'+this.W + 'px;height:'+this.H + 'px;background-color:'+ colors[i];
+		}
+	}
+	
+	
+	var ul = new Wheel('ul');
+	ul.init('li');
+	ul.wheel();
+})()
+
+
+/*function wheel(obj,fn) {
+	obj.addEventListener('mousewheel',fnScroll);
+	obj.addEventListener('DOMMouseScroll',fnScroll);
+	function fnScroll(ev) {
+		var ev = ev || event;
+		var beal = true;//向上滚
+		if (ev.wheelDelta) {
+			beal = ev.wheelDelta>0? true: false;
+		} else {
+			beal = ev.detail>0? false: true;
+		}
+		fn && typeof fn == 'function' && fn(beal);
+	}
+}*/
+//页面渲染
+
+
+function trigger(obj,Event) {
+	if ( obj.Event[Event] ) {
+		for ( var i=0; i<obj.Event[Event].length; i++ ) {
+			obj.Event[Event]();
+		}
+	}
+}
+function addEvent(obj,Event,fn) {
+	obj.Event = obj.Event || {};
+	obj.Event[Event] = obj.Event[Event] || [];
+	if ( indexOf(fn,obj.Event[Event]) ) {
+		obj.Event[Event].push(fn);
+	}
+}
+function indexOf(obj,arr) {
+	var onOff = true;
+	arr.forEach(function(item){
+		if ( obj === item ) {
+			onOff = false;
+		}
+	})
+	return onOff;
+}
+</script>
+</html>

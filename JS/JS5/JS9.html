@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+#box {
+	width: 300px;
+	height: 300px;
+	background-color: red;
+}
+</style>
+<script>
+	window.onload = function () {
+		var oBox = document.getElementById('box');
+		function fn(obj,attr,num) {
+			
+			/*if ( arguments.length == 2 ) {
+				return getComputedStyle(obj)[attr];
+			} else {
+				return obj.style[attr] = num;
+			}*/
+			switch (arguments.length) {
+				case 2:
+					return getComputedStyle(obj)[attr];
+					break;
+				case 3:
+					return obj.style[attr] = num;
+					break;
+			}
+		}
+		alert(fn(oBox,'width','300px'));
+		
+	}
+</script>
+</head>
+<body>
+	<div id="box"></div>
+</body>
+</html>

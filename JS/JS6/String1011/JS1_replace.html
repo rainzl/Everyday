@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.wrap {
+	position: relative;
+	margin: 50px auto;
+	width: 448px;
+}
+.wrap>span {
+	position: absolute;
+	top: 20px;
+	background-color: rgba(0,0,0,.4);
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	font: bold 30px/50px "微软雅黑";
+	color: #fff;
+	cursor: pointer;
+}
+.prev {
+	left: -60px;
+}
+.next {
+	right: -50px;
+}
+.wrap>span:hover {
+	background-color: rgba(0,0,0,.6);
+}
+#box {
+	width: 448px;
+	height: 100px;
+}
+#box li {
+	float: left;
+	width: 100px;
+	border: 5px solid #fff;
+}
+#box img {
+	width: 100px;	
+}
+#box .active {
+	border-color: red;
+}
+</style>
+<script>
+var arr = [
+	{src:'../../JS3/text3/1.jpg',caption:'图片一'},
+	{src:'../../JS3/text3/2.jpg',caption:'图片二'},
+	{src:'../../JS3/text3/3.jpg',caption:'图片三'},
+	{src:'../../JS3/text3/4.jpg',caption:'图片四'}
+];
+	window.onload = function () {
+		//------生成页面li列表的函数start-------
+		var oBox = document.getElementById('box');
+		var _html = oBox.innerHTML;
+		var arr1 = [];
+		var htmlStr = '';
+		for ( var i=0; i<arr.length; i++ ) {
+			var con = _html.replace('{{src}}','src').
+							replace('{{img}}',arr[i].src).
+							replace('{{caption}}',arr[i].caption);
+			arr1.push(con);
+		}
+		htmlStr = arr1.join();
+		for (var i=0; i<htmlStr.length; i++) {
+			htmlStr = htmlStr.replace(',','');
+		}
+		oBox.innerHTML = htmlStr;
+		//------生成页面li列表的函数end-------
+		
+		
+		var aBoxLi = oBox.getElementsByTagName('li');
+		var aSpans = document.querySelectorAll('.wrap>span');
+		var oWrap = document.querySelector('.wrap');
+		var num = 0;
+		mainClear(aBoxLi);//页面加载完，执行显示当前元素的函数
+		
+		var n = 1;//此变量目的是在点击上一张或者下一张的时候为num负值。
+		aSpans[0].onclick = function () {
+			num --;
+			num < 0? num = aBoxLi.length - 1: num %= aBoxLi.length;
+			mainClear(aBoxLi);
+		}
+		aSpans[1].onclick = prevNext;
+		var timer = 0;
+		clearInterval(timer);
+		timer = setInterval(prevNext,1000);
+		//循环列表，添加鼠标移入事件
+		for ( var i=0; i<aBoxLi.length; i++ ) {
+			aBoxLi[i].index = i;
+			aBoxLi[i].onmouseover = function () {
+				num = this.index;
+				mainClear(aBoxLi);
+			}
+		}
+		//鼠标移出移出wrap.开启关闭图片切换定时器
+		oWrap.onmouseover = function () {clearInterval(timer)};
+		oWrap.onmouseout = function () {timer = setInterval(prevNext,800)};
+		//点击上一张或者下一张的函数
+		function prevNext() {
+			num += n;
+			num <= 0 || num >= aBoxLi.length - 1? n = -n:null;
+			console.log(num);
+			mainClear(aBoxLi);
+		}
+		//------大清洗并选中当前元素函数---------
+		function mainClear(obj) {
+			for ( var i=0; i<obj.length; i++ ) {
+				if ( i == num ) {
+					obj[i].className = 'active';
+				} else {
+					obj[i].className = '';
+				}
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<section class="wrap">
+		<ul id="box">
+			<li>
+				<img {{src}}="{{img}}" />
+				<h2>{{caption}}</h2>
+			</li>
+		</ul>
+		<span class="prev"><</span>
+		<span class="next">></span>
+	</section>
+</body>
+</html>

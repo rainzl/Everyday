@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+html,
+body {
+	width: 100%;
+	height: 100%;
+}
+body,
+p {
+	margin: 0;
+}
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+a {
+	text-decoration: none;
+}
+#folder {
+	width: 100%;
+	height: 100%;
+}
+.fold1 header {
+	padding: 20px;
+	height: 50px;
+	background-color: #eee;
+}
+.fold1 header p {
+	padding-top: 20px;
+	font: 12px/16px "宋体";
+	height: 20px;
+}
+.fold1 header a {
+	color: #666;
+}
+.fold1 ul {
+	overflow: hidden;
+	padding: 10px 30px;
+}
+.fold1 li {
+	position: relative;
+	float: left;
+	margin: 10px;
+	width: 100px;
+	height: 100px;
+	text-align: center;
+	border: 1px solid transparent;
+}
+.fold1 input[type="checkbox"] {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.fold1 ul a {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 76px;
+	width: 100px;
+}
+.fold1 ul p {
+	height: 30px;
+	font: 14px/30px "宋体";
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.fold1 a input {
+	box-sizing: border-box;
+	height: 30px;
+	width: 100%;
+	border: 1px solid #898989;
+	font: 14px/30px "宋体";
+	text-align: center;
+}
+.active {
+	background-color: #cce8ff;
+	border: 1px solid #99d1ff;
+}
+.show {
+	display: block;
+}
+.hid {
+	display: none;
+}
+</style>
+</head>
+<body>
+	<div id="folder">
+		<section class="fold1">
+			<header>
+				<input type="button" value="新建" />
+				<input type="button" value="删除" />
+				<p><a href="javascript:;">第一级</a></p>
+			</header>
+			<ul></ul>
+		</section>
+	</div>
+<script>
+var oFold = document.getElementById('folder');
+
+var oHead = oFold.getElementsByTagName('header')[0];
+var oCreatBtn = oHead.getElementsByTagName('input')[0];
+var oRemoveBtn = oHead.getElementsByTagName('input')[1];
+var arrNum = [];
+var arrName = [];
+
+
+var oUl = oFold.getElementsByTagName('ul')[0];
+
+oCreatBtn.onclick = creatFold;
+
+function creatFold() {
+	var name = getName();
+	var li = document.createElement('li');
+	var inputCheck = document.createElement('input');
+	li.nameIndex = name.index;
+	inputCheck.type = 'checkbox';
+	inputCheck.className = 'hid';
+	
+	li.onclick = function () {
+		inputCheck.checked = !inputCheck.checked;
+		inputCheck.className = 'show';
+		this.className = 'active';
+	}
+	li.onmouseover = function () {
+		inputCheck.className = 'show';
+		this.className = 'active';
+	}
+	li.onmouseout = function () {
+		if ( inputCheck.checked ) {
+			inputCheck.className = 'show';
+			this.className = 'active';
+		} else {
+			inputCheck.className = 'hid';
+			this.className = '';
+		}
+	}
+	inputCheck.onclick = function (ev) {
+		var ev = ev || event;
+		ev.cancelBubble = true;
+	}
+	
+	var a = document.createElement('a');
+	var img = document.createElement('img');
+	var p = document.createElement('p');
+	inputText = document.createElement('input');
+	img.src = 'img14/0.png';
+	inputText.type = 'text';
+	inputText.className = 'hid';
+	p.innerHTML = name.name;
+	arrName.push(name.name);
+	
+	
+	inputText.onclick = function(ev){
+		var ev = ev || event;
+		ev.cancelBubble = true;
+	}
+	p.onclick = function (ev) {
+		this.className = 'hid';
+		this.nextElementSibling.className = 'show';
+		this.nextElementSibling.value = this.innerHTML;
+		this.nextElementSibling.focus();
+		this.nextElementSibling.select();
+		var ev = ev || event;
+		ev.cancelBubble = true;
+	}
+	
+	a.appendChild(img);
+	a.appendChild(p);
+	a.appendChild(inputText);
+	li.appendChild(inputCheck);
+	li.appendChild(a);
+	oUl.appendChild(li);
+	inputText.focus();
+	
+}
+//删除文件夹
+oRemoveBtn.onclick = removeFold;
+function removeFold() {
+	var aLi = oUl.children;
+	for ( var i=aLi.length-1; i>=0; i-- ) {
+		
+		var inputCheck = aLi[i].getElementsByTagName('input')[0];
+		if ( inputCheck.checked ) {
+			arrNum[aLi[i].nameIndex] = '';
+			oUl.removeChild(aLi[i]);
+		}
+	}
+}
+function getName() {
+	if ( arrNum.length ) {
+		for ( var i=0; i<arrNum.length; i++ ) {
+			if ( arrNum[i] === '' ) {
+				arrNum[i] = i;
+				if ( i == 0 ) {
+					return {'name':'新建文件夹','index':i};
+				} else {
+					return {'name':'新建文件夹'+(i+1),'index':i};
+				}
+				break;
+			}
+		}
+		
+		arrNum.push(arrNum.length);
+		return {'name':'新建文件夹'+arrNum.length,'index':arrNum.length-1};
+	} else {
+		arrNum.push(0);
+		return {'name':'新建文件夹','index':arrNum.length-1};
+	}
+}
+//点击文档保存修改文件名
+document.onclick = function () {
+	var aLi = oUl.children;
+	if ( aLi ) {
+		for ( var i=0; i<aLi.length; i++ ) {
+			var p = aLi[i].getElementsByTagName('p')[0];
+			if ( p.className == 'hid' ) {
+				var ipt = p.nextElementSibling;
+				if ( ipt.value.trim() == '' ) {
+					ipt.className = 'hid';
+					p.className = 'show';
+					return;
+				} else {
+					if ( arrName.indexOf(ipt.value) != -1 ) {
+						ipt.focus();
+						ipt.select();
+						alert('名字重复了');
+						return;
+					} else {
+						var n = arrName.indexOf(p.innerHTML);
+						arrName.splice(n,1);
+						p.innerHTML = ipt.value;
+						p.className = 'show';
+						ipt.className = 'hid';
+						arrName.push(ipt.value)
+						arrNum[p.parentNode.parentNode.nameIndex] = '';
+						p.parentNode.parentNode.removeAttribute('nameIndex');
+					}
+				}
+			}
+		}
+	}
+}
+
+</script>
+</body>
+</html>

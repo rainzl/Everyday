@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+body,html {
+	margin: 0;
+}
+#list {
+	margin: 0 auto;
+	padding: 0;
+	list-style: none;
+	position: relative;
+}
+li {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #3B8CFF;
+}
+</style>
+</head>
+<body>
+	<ul id="list"></ul>
+<script src="js/jquery-3.1.1.js"></script>
+<script src="js/publicMain.js"></script>
+<script>
+$(function(){
+	var $list = $('#list');
+	var W = $(window).innerWidth();
+	var w = 80;
+	var space = 20;
+	
+	
+	fnCreatLi();
+	
+	
+	
+	
+	
+	
+	function fnCreatLi() {
+		console.log(W/(w+space));
+		var num = parseInt(W/(w+space));
+		$list.css('width',num*(w+space));
+		for ( var i=0; i<num; i++ ) {
+			var $li = $('<li></li>');
+			$li.css({width:w,height:w,left:i*(w+space)});
+			$li.attr('onOff',true);
+			$li.click(function(){
+				fnNextMove($(this));
+				fnPrevMove($(this));
+			})
+			$li.appendTo($list)
+		}
+	}
+	function fnNextMove(obj) {
+		setTimeout(function(){
+			if (obj && obj.attr('onOff')) {//obj.attr('onOff')false的时候，也走这里
+				obj.animate({'top':300},600,'linear',function(){
+					obj.attr('onOff',false);
+				});
+				fnNextMove(obj.next())
+			} else {
+				obj.animate({'top':0},600,'linear',function(){
+					obj.attr('onOff',true);
+				});
+				fnNextMove(obj.next())
+			}
+		},100)
+	}
+	function fnPrevMove(obj) {
+		setTimeout(function(){
+			if (obj && obj.attr('onOff')) {
+				obj.animate({'top':300},600,'linear',function(){
+					obj.attr('onOff',false);
+				});
+				fnPrevMove(obj.prev());
+			} else {
+				obj.animate({'top':0},600,'linear',function(){
+					obj.attr('onOff',true);
+				});
+				fnPrevMove(obj.prev());
+			}
+		},100)
+	}
+})
+</script>
+</body>
+</html>

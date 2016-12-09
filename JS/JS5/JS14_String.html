@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+#wrap {
+	overflow: hidden;
+	margin: 0 auto;
+	padding: 20px 20px;
+	width: 800px;
+	height: 500px;
+	background-color: #A8A8A8;
+}
+textarea {
+	float: left;
+	width: 350px;
+	height: 500px;
+	resize: none;
+	font: 16px/30px "微软雅黑";
+}
+input {
+	height: 50px;
+}
+div {
+	float: right;
+	width: 350px;
+	height: 500px;
+	font: 16px/30px "微软雅黑";
+	background-color: #B0E0E6;
+}
+</style>
+<script>
+	window.onload = function () {
+		var oText = document.querySelector('#wrap textarea');
+		var oBtn = document.querySelector('#wrap input');
+		var oDiv = document.querySelector('#wrap div');
+		var timer = 0;
+		console.log(oBtn);
+		oBtn.onclick = function () {
+			oDiv.innerHTML = '';
+			var str = '';
+			str = oText.innerHTML;
+			var arr = [];
+			arr = str.split('');
+			setInterval(
+				function () {
+					oDiv.innerHTML += str.charAt(0);
+					str = str.substring(0,1);
+					oText.innerHTML = str;
+				},1000
+			);
+			/*function font(){
+				
+			}
+			for ( var i=0; i<str.length; i++ ) {
+				
+				oDiv.innerHTML += str.charAt(i);
+			}*/
+		}
+	}
+</script>
+</head>
+<body>
+	<section id="wrap">
+		<textarea>我的梦想是世界和平，我的梦想是世界和平，我的梦想是世界和平，我的梦想是世界和平，我的梦想是世界和平，我的梦想是世界和平，我的梦想是世界和平，我的梦想是世界和平，</textarea>
+		<input type="button" value="复制到右侧" />
+		<div></div>
+	</section>
+</body>
+</html>

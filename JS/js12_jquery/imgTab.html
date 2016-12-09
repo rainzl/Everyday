@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<div id="div"></div>
+	<ul>
+		<li></li>
+	</ul>
+</body>
+<script src="js/sizzle.js"></script>
+<script>
+(function(global,factory){
+	factory(global);
+})(typeof window !== 'undefined'? window: this,function(global,noGlobal){
+	function Jquery(selector) {
+		return new Jquery.init(selector);
+	}
+	
+	
+	Jquery.prototype = {
+		css: function() {
+			if ( arguments.length == 1 ) {
+				if ( Object.prototype.String.call(arguments[0]) == '[object Object]' ) {
+					
+				} else {
+					return this[0].currentStyle? this[0].currentStyle[arguments[0]]: getComputedStyle[this[0]][arguments[0]]
+				}
+			} else {
+				this[0].style[arguments[0]] = arguments[1];
+			}
+		}
+	}
+	Jquery.init = function (selector) {
+		if ( typeof selector == 'function' ) {
+			document.addEventListener('DOMContentLoaded',selector);
+		} else {
+			this.arr = Sizzle(selector);
+			for ( var i=0; i<this.arr.length; i++ ) {
+				this[i] = this.arr[i];
+			}
+			this.length = this.arr.length;
+		}
+	}
+	Jquery.init.prototype = Jquery.prototype;
+	window.$ = Jquery;
+})
+console.log($('#div'))
+$($('#div')[0]).css('background','red');
+$('#div').css('width','100px');
+$('#div').css('height','100px');
+</script>
+</html>

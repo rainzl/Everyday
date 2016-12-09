@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#box {
+	position: relative;
+	overflow: hidden;
+	margin: 100px auto;
+	width: 400px;
+	height: 200px;
+	border: 5px solid lightpink;
+}
+#box li {
+	float: left;
+	width: 80px;
+	height: 80px;
+	margin: 10px;
+	text-align: center;
+	font: bold 50px/80px arial;
+	color: #fff;
+	background-color: #00BFFF;
+}
+</style>
+
+</head>
+<body>
+	<ul id="box">
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+		<li>7</li>
+		<li>8</li>
+	</ul>
+<script type="text/javascript" src="../../publicJS/Js1_publicMove.js" ></script>
+<script>
+window.onload = function () {
+	var oBox = getEle('#box');
+	var aBoxs = getEle('#box li');
+	var arr = [];
+	aBoxs.forEach(function(single){
+		arr.push([single.offsetLeft,single.offsetTop]);
+	});
+	aBoxs.forEach(function(single,i){
+		single.style.margin = '0';
+		single.style.position = 'absolute';
+		single.style.left = arr[i][0] + 'px';
+		single.style.top = arr[i][1] + 'px';
+	});
+	oBox.onclick = randomFn;
+	//随机排序方法
+	function randomFn() {
+		arr.sort(function(){
+			return 0.5 - Math.random();
+		});
+		aBoxs.forEach(function(single,i){
+			mTween(single,{'left':arr[i][0],'top':arr[i][1]},400,'linear');
+		});
+	}
+	//倒序排序方法
+	function order() {
+		arr.reverse();
+		
+		aBoxs.forEach(function(single,i){
+			mTween(single,{'left':arr[i][0],'top':arr[i][1]},400,'linear');
+		});
+	};
+	//var a = [3,1,7,8,11,23,1,.5];
+	//console.log(mpSort(a));
+	
+	//冒泡排序函数
+	function mpSort(obj) {
+		obj.forEach(function(single,i,arr){
+			obj.forEach(function(single,i,arr){
+				if ( arr[i] > arr[i+1] ) {
+					[arr[i],arr[i+1]] = [arr[i+1],arr[i]];
+				}
+			})
+		});
+		return obj;
+	}
+	//快速排序函数
+	var a = [3,4,2,1,6,5];
+	//console.log(fn(a));
+	function fn(arr){
+		var first = arr.shift();
+		var right = [];
+		var left = [];
+		console.log(arr);
+		if ( arr.length <= 1 ) {
+			return arr;
+		} 
+		
+		while ( arr.length ){
+			if ( first > arr[0] ){
+				right.push(arr.shift());
+			} else {
+				left.push(arr.shift());
+			} 
+		}
+		return fn(left).concat(first,fn(right));
+	}
+	//快速排序函数
+	function quickSort(obj) {
+		var first = obj.shift();
+		var left = [];
+		var right = [];
+		if ( obj.length <= 1 ) {
+			return obj;
+		}
+		while (obj.length) {
+			if ( obj[0] < first ) {
+				right.push(obj.shift());
+			} else {
+				left.push(obj.shift());
+			}
+		}
+		return quickSort(left).concat(first,quickSort(right));
+	}
+	
+	
+	//获取元素的函数
+	function getEle(obj) {
+		if ( obj.substr(0,1) == '#' && obj.split(' ').length == 1 ) {
+			return document.getElementById(obj.substr(1));
+		} else {
+			var objArr = Array.from(document.querySelectorAll(obj));
+		}
+		return objArr.length == 1? objArr[0]: objArr;
+	}
+	
+	
+}
+</script>
+</body>
+</html>

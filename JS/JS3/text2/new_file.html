@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<style>
+	body,ul,li,p,h2{ margin: 0; padding: 0;}
+	li{ list-style: none;}
+	a{ text-decoration: none; color: #595959;}
+	a:hover{ text-decoration: none; cursor:pointer;}
+	
+	#fore{ margin: 10px auto; width: 340px; border: 1px solid #160505; text-indent: 2em;}
+	#fore .top{ border-bottom: 1px dashed #7c7c7c; line-height: 30px;}
+	#fore p{ font-size: 14px; line-height: 24px; color: #595959;}
+	
+	#three{ width: 300px; height: 418px; margin: 10px auto; padding-top: 1px; background: url(bg1.png) repeat-x;}
+	#three ul{width: 298px; height: 417px; border-right: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf; position: relative;}
+	#three li{ width: 100px;}
+	#three .one{ background: url(bg2.png) no-repeat 9px 0 ; position: absolute; top: 56px;height: 17px;}
+	#three .two{ background: url(bg2.png) no-repeat 9px -17px; position: absolute; top: 139px; height: 23px;}
+	#three .three{ background: url(bg2.png) no-repeat 9px -40px; position: absolute; top: 239px; height: 21px;}
+	#three .fore{ background: url(bg2.png) no-repeat 9px -61px; position: absolute; top: 339px; height: 27px;}
+	#two{ width: 308px; height: 40px; padding: 0 96px; border: solid 1px #444444; margin: 10px auto; overflow: hidden;}
+	#two li{ float: left; padding: 11px 14px 13px; font-size: 14px;}
+	
+	#six ul{ width: 280px; background: #333333; margin: 10px auto;}
+	#six ul li{ height: 14px; border-bottom: 1px dotted #FFFFFF; padding: 6px 0 10px; color: #FFFFFF; font-size: 14px;}
+	#six #dotted{ border-top: 1px dotted #FFFFFF;}
+	#five{ margin: 10px auto;padding: 3px 3px 5px; width: 548px; background: #e6edea; font-size: 12px; letter-spacing: 1px;} 
+	#five h2{ font-size: 15px; font-weight: normal; text-decoration: underline; line-height: 30px;}
+	#five a{ color: #0000cc;}
+	#five span{ color: #cc0000; }
+	#five div{ line-height: 20px;}
+	#five ul{ }
+	#five li{ line-height: 26px;float: left; padding-right: 5px;}
+	#five p{ line-height: 18px;color: #008000;}
+	.active{ text-decoration: underline;}
+	.clear{ zoom: 1;}
+	.clear:after{ content: ""; display: block; clear: both;}
+</style>
+<body>
+	<ul id="two" class="clear">
+		<li>首页</li>
+		<li>妙味课堂</li>
+		<li>关于我们</li>
+		<li>联系我们</li>
+	</ul>
+	<div id="six">
+		<ul>
+			<li id="dotted">课程大纲</li>
+			<li>妙味视频</li>
+			<li>妙味论坛</li>
+		</ul>
+	</div>
+	<div id="three">
+		<ul>
+			<li class="one"></li>
+			<li class="two"></li>
+			<li class="three"></li>
+			<li class="fore"></li>
+		</ul>
+	</div>
+	<div id="fore">
+		<p class="top">取消当前命令:Esc; 工具选项板:Enter; 选项板调整:Shift+Tab; 退出系统:Ctrl+Q; 获取帮助:F1...[<a href="#">详细</a>]</p>
+		<p>取消当前命令:Esc; 工具选项板:Enter; 选项板调整:Shift+Tab; 退出系统:Ctrl+Q; 获取帮助:F1.。。取消当前命令:Esc; 工具选项板:Enter; 选项板调整:Shift+Tab; 退出系统:Ctrl+Q; 获取帮助:F1.。。[<a href="#">详细</a>]</p>
+	</div>
+	<div id="five">
+		<h2><a href="#"><span class="active">妙味课堂</span>-搜狗百科</a></h2>
+		<div><span>妙味课堂</span>是北京妙味趣学信息科技有限公司旗下的IT前端培训品牌，<span>妙味课堂</span>是一支独具特色的IT培训团队，妙味反对传统IT教育枯燥乏味的教学模式，妙味提供一种全新...</div>
+		<ul class="clear">
+			<li><a>关于妙味</a></li>
+			<li><a>- 妙味讲师：</a></li>
+			<li><a>- 培训方式：</a></li>
+			<li><a>- 妙味培训理念：</a></li>
+		</ul>
+		<p>搜狗百科-baike.sougou.com/v...-2014-9-30</p>
+	</div>
+	
+</body>
+</html>

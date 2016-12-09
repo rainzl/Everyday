@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+html,body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+#box {
+	margin: 20px auto;
+	width: 800px;
+	height: 500px;
+}
+canvas {
+	display: block;
+	margin: 10px auto;
+}
+</style>
+</head>
+<body>
+	<div id="box"><canvas width="800" height="500" style="background-color: #eee;">woshiyitouzhu</canvas></div>
+<script>
+var oBox = document.getElementById('box');
+var canvas = oBox.getElementsByTagName('canvas')[0];
+var cxt = canvas.getContext('2d');
+var cW = canvas.width,
+	cH = canvas.height,
+	rW = cW/2, rH = cH/2;
+var dian = {
+	leftT: {
+		x: -(rW-100),
+		y: -(rH-50)
+	},
+	rightT: {
+		x: rW-100,
+		y: -(rH-50)
+	},
+	leftB: {
+		x: -(rW-100),
+		y: rH-50
+	},
+	rightB: {
+		x: rW-100,
+		y: rH-50
+	}
+}
+var par = {
+	top:{
+		bas1: {
+			x: -100,
+			y: -rH
+		},
+		bas2: {
+			x: 100,
+			y: -rH
+		}
+	},
+	right:{
+		bas1: {
+			x: rW,
+			y: -50
+		},
+		bas2: {
+			x: rW,
+			y: 50
+		}
+	},
+	bottom:{
+		bas1: {
+			x: 100,
+			y: rH
+		},
+		bas2: {
+			x: -100,
+			y: rH
+		}
+	},
+	left:{
+		bas1: {
+			x: -rW,
+			y: 50
+		},
+		bas2: {
+			x: -rW,
+			y: -50
+		}
+	}
+}
+	
+	var target = {
+		leftT: {'x':-rW,'y':-rH},
+		rightT: {'x':rW,'y':-rH},
+		rightB: {'x':rW,'y':rH},
+		leftB: {'x':-rW,'y':rH}
+	}
+	var sca = {
+		x: .5,
+		y: .5
+	}
+	scal(sca,{x:1,y:1},500,function(){
+		zbjTween(dian,target,1500);
+	})
+	function scal(obj,attr,times,callBack) {
+		var timer = null;
+		var t = 0;//当前步数
+		var b = {};//元素移动的初始位置
+		var c = {};//初始位置和当前位置的差值
+		var d = times/20; //元素移动的总步数
+		for ( var s in obj ) {
+			b[s] = obj[s];
+			c[s] = attr[s] - b[s];
+		}
+		timer = setInterval(function(){
+			var temp = {};
+			if ( t < d ) {
+				for ( var s in attr ) {
+					var val = backOut(t, b[s], c[s], d);
+					temp[s] = val;
+				}
+				sca = temp;
+				draw(dian,par,temp)
+				t++;
+			} else {
+				clearInterval(obj.timer);
+				for ( var s in attr ) {
+					sca[s] = attr[s];
+				}
+				if (callBack&& typeof callBack == 'function') {
+					setTimeout(callBack,20);
+				}
+			}
+		},60);
+	}
+	function zbjTween(obj,attr,times,callBack) {
+		var t = 0;//当前步数
+		var b = {};//元素移动的初始位置
+		var c = {};//初始位置和当前位置的差值
+		var d = times/50; //元素移动的总步数
+		for ( var s in attr ) {
+			b[s] = {};
+			c[s] = {};
+			for ( var sj in obj[s] ) {
+				b[s][sj] = obj[s][sj];
+				c[s][sj] = attr[s][sj] - b[s][sj];
+			}
+		}
+		obj.timer = setInterval(function(){
+			if ( t<d ) {
+				t++;
+				var temp = {};
+				for ( var s in attr ) {
+					temp[s] = {};
+					for (var sj in obj[s]) {
+						var val = linear(t, b[s][sj], c[s][sj], d);
+						temp[s][sj] = val;
+					}
+				}
+				draw(temp,par,sca);
+			} else {
+				clearInterval(obj.timer);
+				if (callBack&& typeof callBack == 'function') {
+					setTimeout(callBack,60);
+				}
+			}
+		},60);
+	}
+	
+	function draw(d,par,sca) {
+		cxt.clearRect(0,0,cW,cH)
+		cxt.save();
+		cxt.translate(cW/2,cH/2);
+		cxt.scale(sca.x,sca.y);
+		cxt.beginPath();
+		cxt.fillStyle = 'red';
+		
+		cxt.moveTo(d.leftT.x,d.leftT.y);
+		cxt.bezierCurveTo(par.top.bas1.x,par.top.bas1.y,par.top.bas2.x,par.top.bas2.y,d.rightT.x,d.rightT.y);
+		cxt.bezierCurveTo(par.right.bas1.x,par.right.bas1.y,par.right.bas2.x,par.right.bas2.y,d.rightB.x,d.rightB.y);
+		cxt.bezierCurveTo(par.bottom.bas1.x,par.bottom.bas1.y,par.bottom.bas2.x,par.bottom.bas2.y,d.leftB.x,d.leftB.y);
+		cxt.bezierCurveTo(par.left.bas1.x,par.left.bas1.y,par.left.bas2.x,par.left.bas2.y,d.leftT.x,d.leftT.y);
+		cxt.fill();
+		
+		cxt.restore();
+	}
+	 function bounceOut(t, b, c, d){
+		if ((t/=d) < (1/2.75)) {
+			return c*(7.5625*t*t) + b;
+		} else if (t < (2/2.75)) {
+			return c*(7.5625*(t-=(1.5/2.75))*t + 0.75) + b;
+		} else if (t < (2.5/2.75)) {
+			return c*(7.5625*(t-=(2.25/2.75))*t + 0.9375) + b;
+		}
+		return c*(7.5625*(t-=(2.625/2.75))*t + 0.984375) + b;
+	}
+	function backOut(t, b, c, d, s){
+		if (typeof s == 'undefined') {
+			s = 2.70158;  //回缩的距离
+		}
+		return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+	}
+	function linear (t, b, c, d){
+		return c*t/d + b;
+	}
+</script>
+</body>
+</html>

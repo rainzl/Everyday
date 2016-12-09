@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style>
+#box {
+	border: 10px solid #000000;
+	width: 100px;
+	height: 100px;
+	background-color: red;
+}
+#btn {
+	padding-top: 10px;
+}
+</style>
+<script>
+window.onload = function () {
+	
+	var oBox = document.getElementById('box');
+	var oRed = document.getElementById('red');
+	var oBlue = document.getElementById('blue');
+	var oYellow = document.getElementById('yellow');
+	
+	/*btnOnclick( oRed, 'red' );
+	btnOnclick( oBlue, 'blue' );
+	btnOnclick( oYellow, 'yellow' );
+	function btnOnclick( name, color ) {
+		name.onclick = function () {
+			oBox.style.backgroundColor = color;
+		}
+	}*/
+	var oBtn = document.getElementById('btn');
+	var aRrColor = ['red','blue','yellow'];
+	var oIputs = oBtn.getElementsByTagName('input');
+	for ( i=0; i<aRrColor.length; i++ ) {
+		oBtn.innerHTML += '<input type="button" value="' + aRrColor[i] + '">'
+	}
+	for ( i=0; i<aRrColor.length; i++ ) {
+		oIputs[i].index = i;
+		oIputs[i].onclick = function () {
+			oBox.style.backgroundColor = aRrColor[this.index];
+		}
+	}
+	
+}
+
+</script>
+</head>
+<body>
+	<div id="box"></div>
+	<div id="btn">
+		<!--<input type="button" value="red" id="red" />
+		<input type="button" value="yellow" id="yellow" />
+		<input type="button" value="blue" id="blue" />-->
+	</div>
+</body>
+</html>

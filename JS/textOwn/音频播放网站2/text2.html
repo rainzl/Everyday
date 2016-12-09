@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<canvas id="canvas" width="600" height="600"></canvas>
+</body>
+<script>
+var canvas = document.getElementById('canvas');
+var cxt = canvas.getContext('2d');
+cxt.fillStyle =  '#666';
+cxt.fill();
+cxt.beginPath();
+
+cxt.arc(100,100,50,0,2*Math.PI);
+cxt.clip();
+cxt.save();
+cxt.beginPath();
+cxt.fillStyle = 'red';
+cxt.rect(100,100,100,100);cxt.fill();
+cxt.closePath();
+
+
+</script>
+</html>

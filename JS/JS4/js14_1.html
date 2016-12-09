@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+body,
+h2 {
+	margin: 0;
+}
+ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+h2 {
+	line-height: 50px;
+}
+.wrap {
+	margin: 30px auto;
+	width: 500px;
+	border: 5px solid #B8B8BA;
+}
+.wrap header {
+	background-color: #D4D0C8;
+}
+.wrap ul li {
+	height: 38px;
+	font: 20px/38px "楷体";
+}
+.wrap ul span {
+	margin-right: 30px;
+	float: right;
+}
+.wrap footer {
+	border-top: 1px solid #A7A7A7;
+	padding: 10px 0;
+	font: 24px/46px "楷体";
+	background-color: #D4D0C8;
+}
+.wrap .hotRed {
+	background-color: papayawhip;
+}
+.wrap .hotBlue {
+	background-color: powderblue;
+}
+.wrap .hotActive {
+	background-color: #CEDAD5;
+}
+</style>
+<script>
+/*
+ 	1. li隔行换色，添加hotRed、hotBlue
+ 	2. 鼠标移入事件
+ 		li的背景颜色换成active
+ 	3. 鼠标移出事件
+ 		如果li被点击过，li的背景颜色为active；
+ 		如果li没有被点击过，li的北京颜色为原来的颜色
+ 	4. 鼠标点击事件
+ 		点击一下，选中，第二下取消选中。
+ 		选中后北京颜色为active。
+ 		全部选中后，下面的全选全不选，勾选。
+ 	5. 全选/全不选
+ 		全选：所有li全部选中，背景颜色切换
+ 		全不选：所有li全部取消选中，背景颜色取消
+ 		
+ */
+	window.onload = function () {
+		var oHotList = document.getElementById('hotList');
+		var aHotListLi = oHotList.getElementsByTagName('li');
+		var aHotListCheck = oHotList.getElementsByTagName('input');
+		var oHotBtn = document.getElementById('hotBtnMain');
+		var btnOnOff = true;
+		var num = 0;
+		hotBg();
+		for ( i=0; i<aHotListLi.length; i++ ) {
+			//鼠标移入li，背景颜色改变
+			aHotListLi[i].onmouseover = function () {
+				this.className += ' hotActive';
+			}
+			//鼠标移出li，背景颜色取消
+			aHotListLi[i].onmouseout = hotBg;
+			
+			//点击li，选中歌曲
+			aHotListLi[i].index = i;
+			aHotListLi[i].onOff = true;
+			aHotListLi[i].onclick = function () {
+				
+				//获取当前li的input
+				oHotCheck = this.getElementsByTagName('input')[0];
+				
+				//判断input的状态
+				if ( this.onOff ) {
+					oHotCheck.checked = true;
+					this.style.backgroundColor = '#CEDAD5';
+					this.onOff = false
+					
+				} else {
+					oHotCheck.checked = false;
+					this.style.backgroundColor = '';
+					this.onOff = true;
+				}
+				
+				//每次点击 计算选中个数 ----（1）----
+				if ( checkedNum() >= aHotListLi.length ) {
+					oHotBtn.checked = true;
+					btnOnOff = false;
+				} else {
+					oHotBtn.checked = false;
+					btnOnOff = true;
+				}
+			}
+		
+		
+			//点选歌曲名
+			aHotListCheck[i].index = i;
+			aHotListCheck[i].onOff = true;
+			aHotListCheck[i].onclick = function (ev) {
+				
+				//根据当前选中状态 设置背景色
+				if ( this.checked ){
+					aHotListLi[this.index].style.backgroundColor = '#CEDAD5';
+
+				} else {
+					aHotListLi[this.index].style.backgroundColor = '';
+				}
+  
+				//每次点击后 计算选中个数   与（1）可以封装一下
+				if ( checkedNum() >= aHotListCheck.length ) {
+					oHotBtn.checked = true;
+					btnOnOff = false;
+				} else {
+					oHotBtn.checked = false;
+					btnOnOff = true;
+				}
+				ev.stopPropagation();
+			}
+		}
+		
+		//计算选中个数
+		function checkedNum(){
+			var num = 0;
+			for(var i=0;i<aHotListCheck.length;i++){
+				if( aHotListCheck[i].checked ){
+					num++;
+				}
+			}
+			return num;
+		}
+		
+		
+		//全选、全不选
+		oHotBtn.onclick = function () {
+			for ( i=0; i<aHotListCheck.length; i++ ) {
+				if ( btnOnOff ) {
+					aHotListCheck[i].checked = btnOnOff;
+					aHotListLi[i].style.backgroundColor = '#CEDAD5';
+				} else {
+					aHotListCheck[i].checked = btnOnOff;
+					aHotListLi[i].style.backgroundColor = '';
+				}
+			}
+			btnOnOff = !btnOnOff;
+		}
+		
+		
+		//li添加隔行变色
+		function hotBg() {
+			for ( i=0; i<aHotListLi.length; i++ ) {
+				if ( i%2 == 0 ) {
+					aHotListLi[i].className = 'hotRed';
+				} else {
+					aHotListLi[i].className = 'hotBlue';
+				}
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<section class="wrap" > 
+		<header><h2>热门歌曲</h2></header>
+		<form>
+			<ul id="hotList">
+				<li>
+					<input id="hotOne" type="checkbox" name="hotMusic" />
+					默<span>那英</span>
+				</li>
+				<li>
+					<input id="hotTwo" type="checkbox" name="hotMusic" />
+					袖手旁观<span>齐秦</span>
+				</li>
+				<li>
+					<input id="hotThree" type="checkbox" name="hotMusic" />
+					张三的歌<span>齐秦</span>
+				</li>
+				<li>
+					<input id="hotFour" type="checkbox" name="hotMusic" />
+					光阴的故事<span>邓超</span>
+				</li>
+				<li>
+					<input id="hotFive" type="checkbox" name="hotMusic" />
+					演员<span>薛之谦</span>
+				</li>
+				<li>
+					<input id="hotSix" type="checkbox" name="hotMusic" />
+					断电<span>张敬轩</span>
+				</li>
+			</ul>
+			<footer>
+				<input id="hotBtnMain" type="checkbox" name="hotMusic" />
+				<label for="hotBtnMain">全选</label>
+			</footer>
+		</form>
+	</section>
+</body>
+</html>

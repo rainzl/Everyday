@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<style>
+body,ul,h2{ margin: 0; padding: 0;}
+body{ background: #59595b;}
+li{ list-style: none;}
+#list{ width: 200px; margin: 30px 20px;}
+#list ul{ display: none;}
+#list li { background: #A0E75A;}
+#list li li{ border-bottom: 1px dotted #90908f; background: #ededef; padding-left: 25px; line-height: 25px;}
+#list h2{ background: url(ico1.gif) no-repeat 10px center #b8b8ba; font-size: 15px;padding-left: 25px; line-height: 35px; border-bottom: solid 1px #6d6e6b;}
+#list .hactive{ background: url(ico2.gif) no-repeat 10px center #b0c393; border: none;}
+#list .liactive{ background: #d9e3ca;border: none;line-height: 26px;}
+</style>
+<script>
+	window.onload = function (){
+		var oList = document.getElementById('list');
+		var oH = oList.getElementsByTagName('h2');
+		var oUl = oList.getElementsByTagName('ul');
+		var num = 0;
+		var aLi = null;
+		var aAli = [];
+		var onOff = true;
+		
+		//H2加事件
+		for ( i= 0;i<oH.length; i++ ){
+			oH[i].index = i;
+			oUl[i].onOff = 1;
+			oH[i].onclick = function (){
+				
+				num = this.index;
+
+				list (this);
+				
+				//清除样式
+				for ( j=0; j<aAli.length; j++ ) {
+					aAli[j].className = '';
+					aAli[j].index = true;
+				}
+			}
+		}
+		
+		//ul显示、隐藏
+		function list (that) {
+			if ( oUl[num].onOff == 1 ){
+				for ( i=0; i<oUl.length; i++ ){
+					oH[i].className = '';
+					oUl[i].style.display = 'none';
+					oUl[i].onOff = 1;
+				}
+				oUl[num].style.display = 'block';
+				that.className = 'hactive';
+				oUl[num].onOff = 2;
+				onOff = false;
+			} else {
+				oUl[num].style.display = 'none';
+				that.className = '';
+				oUl[num].onOff = 1;
+				onOff = true;
+			}
+		}
+		
+		
+		//给所有LI加点击事件
+		for ( i=0; i<oUl.length; i++ ){
+			aLi = oUl[i].getElementsByTagName('li');
+			for ( j=0; j<aLi.length; j++ ){
+				aAli.push( aLi[j] );
+			}
+		}
+		
+		for ( i=0; i<aAli.length; i++ ){
+			aAli[i].index = true;
+			
+			aAli[i].onclick = function (){
+
+				if ( this.index ){
+					for ( i=0; i<aAli.length; i++ ){
+						aAli[i].className = '';
+						this.index = true;
+					}
+					this.className = 'liactive';
+					this.index = false;
+				} else {
+					this.className = '';
+					this.index = true;
+				}
+
+
+
+
+
+//				if ( lionOff ){
+//					this.className = 'liactive';
+//					lionOff = false;
+//					this.index = false;
+//				} else {
+//					if ( this.index ){
+//						for ( i=0; i<aAli.length; i++ ) {
+//							aAli[i].className = '';
+//							aAli[i].index = true;
+//						}
+//						this.className = 'liactive';
+//						lionOff = false;
+//						this.index = false;
+//					} else {
+//						this.className = '';
+//						this.index = true;
+//						lionOff = true;
+//					}
+//				}
+				
+				
+			}
+		}
+		
+	}
+</script>
+<body>
+	<div class="body">
+		<ul id="list">
+			<li>
+				<h2>我的好友</h2>
+				<ul>
+					<li class="liactive">Lily</li>
+					<li>张三</li>
+					<li>李四</li>
+					<li>王五</li>
+				</ul>
+			</li>
+			<li>
+				<h2>家人</h2>
+				<ul>
+					<li>赵六</li>
+					<li>魏家坟</li>
+					<li>白马乡</li>
+				</ul>
+			</li>
+			<li>
+				<h2>同事</h2>
+				<ul>
+					<li>衣服</li>
+					<li>旅游</li>
+					<li>新花样</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

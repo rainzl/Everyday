@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+html,body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+#box {
+	margin: 20px auto;
+	width: 800px;
+	height: 500px;
+}
+canvas {
+	display: block;
+	margin: 10px auto;
+}
+</style>
+</head>
+<body>
+	<div id="box"><canvas width="800" height="500" style="background-color: #eee;">woshiyitouzhu</canvas></div>
+<script>
+var oBox = document.getElementById('box');
+var canvas = oBox.getElementsByTagName('canvas')[0];
+var cxt = canvas.getContext('2d');
+var cW = canvas.width,
+	cH = canvas.height;
+
+	move(cxt);
+	function move(cxt) {
+		var H = cH*2/3, W = cW*2/3;
+		var timer = null;
+		var vW = cW/150, vH = cH/150;
+		var gW = cW/80, gH = cH/80;
+		var r = 0.6;
+		timer = setInterval(function(){
+			vW+=gW;
+			vH+=gH;
+			H+=vH;
+			W+=vW;
+			if ( H>=cH ) {
+				H=cH;
+				vH = -r*vH;
+				r += .1;
+			}
+			if ( W>=cW ) {
+				W=cW;
+				vW = -r*vW;
+			}
+			var h1 = H/15,
+				w1 = W/15;
+			if ( Math.abs(vH)<=1) {
+				H=cH;
+				W=cW;
+				clearInterval(timer);
+				timer = setInterval(function(){
+					h1-=10;
+					w1-=10;
+					if ( h1<=0||w1<=0 ) {
+						h1 = 1;
+						w1 = 1;
+						clearInterval(timer);
+					}
+					draw(cxt,H,W,h1,w1);
+				},20)
+			}
+			
+			
+			draw(cxt,H,W,h1,w1);
+		},80);
+	}
+
+	
+	//draw(cxt);
+	function draw(cxt,H,W,h1,w1) {
+		cxt.clearRect(0,0,cW,cH);
+		cxt.save();
+		cxt.translate(cW/2,cH/2);
+		cxt.beginPath();
+		cxt.fillStyle = 'red';
+		
+		
+			
+		var rY = (Math.pow((W/2-w1),2)+h1*h1)/(2*h1),
+			rX = (Math.pow((H/2-h1),2)+w1*w1)/(2*w1);
+		var radX = Math.asin((H/2-h1)/rX);
+		var radY = Math.asin((W/2-w1)/rY);
+		
+		cxt.arc(W/2-rX,0,rX,-radX,radX);
+		cxt.arc(0,H/2-rY,rY,Math.PI/2-radY,Math.PI/2+radY);
+		cxt.arc(-(W/2-rX),0,rX,Math.PI-radX,Math.PI+radX);
+		cxt.arc(0,-(H/2-rY),rY,Math.PI*3/2-radY,Math.PI*3/2+radY);
+		
+		cxt.fill();
+		
+		cxt.restore();
+	}
+	
+
+</script>
+</body>
+</html>

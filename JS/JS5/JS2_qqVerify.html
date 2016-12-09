@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<script>
+	window.onload = function () {
+		var aInput = document.getElementsByTagName('input');
+		var oReminder = document.getElementById('reminder');
+		
+		aInput[1].onclick = function () {
+			
+			var sTr = '';
+			vText = aInput[0].value;
+			
+			if ( vText == '' ) {
+				sTr = '没有内容，随便输点什么吧';
+			} else if ( isNaN(Number(vText)) ) {
+				sTr = '您输入的只能是数字';
+			} else if ( vText[0] == 0 ) {
+				sTr = '输入的数字前面不能有0';
+			} else if ( Number(vText) != parseInt(vText) ) {
+				sTr = '输入的数字不能是小数';
+			} else if ( Number(vText) > 999999999 || Number(vText) < 10000 ) {
+				sTr = '输入的数字不能小于五位或者不能大于十位';
+			} else {
+				sTr = '恭喜您，您输入的是合格的^v^';
+			}
+			oReminder.innerHTML = sTr;
+		}
+	}
+</script>
+<!--验证点： 空值、不是数字、不能有0在前面、不能是小数、不能小于5位或者不能大于十位-->
+</head>
+<body>
+请输入qq号码进行验证： 
+<input type="text" />
+<input type="button" value="开始验证" />
+<div id="reminder"></div>
+</body>
+</html>

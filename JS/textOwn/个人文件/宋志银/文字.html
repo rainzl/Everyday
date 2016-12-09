@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>文字特效</title>
+	<style type="text/css">
+	body,ul{
+		margin:0;
+		padding: 0;
+	}
+	ul{
+		list-style:none;
+	}
+	html{
+		height:100%;
+	}
+	canvas{
+		
+	}
+
+	#wrap{
+		margin:50px auto;
+		width:700px;
+		height:300px;
+		border:1px solid red;
+	}
+
+	#nav li{
+		float:left;
+		padding:10px;
+		position: relative;
+
+	}
+	#nav li a{
+		display:block;
+		text-decoration: none;
+		
+	}
+	#nav .sMenu{
+		top:10px;
+		left:10px;
+		position: absolute;
+	}
+
+	#box{
+		border:1px solid red;
+	}
+
+
+	
+	
+	</style>
+	<script type="text/javascript" src="myTween-new.js"></script>
+</head>
+<body>
+<div id="wrap">
+	<ul id='nav'>
+		<li>
+			<a href="">Motions</a><canvas class='sMenu' width='0' height='0'></canvas>
+		</li>
+
+		<li>
+		<a href="">Developers</a><canvas class='sMenu' width='0' height='0'></canvas>
+		</li>
+	
+		<li>
+		<a href="">BBBBBBB</a><canvas class='sMenu' width='0' height='0'></canvas>
+		</li>
+	</ul>
+	
+</div>
+
+
+
+	<script type="text/javascript">
+		(function(d){
+
+			var nav = d.getElementById('nav');
+			var navLi = nav.getElementsByTagName('li');
+			var x = 0,timer = 0;
+			
+			for(var i = 0; i<navLi.length; i++){
+				//onmouseenter  onmouseleave
+				navLi[i].onmouseenter = function(ev){
+					this.children[0].style.color = 'rgba(255,255,255,0)';
+					var canvas = this.getElementsByClassName('sMenu')[0];
+					var cxt = canvas.getContext('2d');
+					
+					canvas.width = css(this,'width');
+					canvas.height = css(this,'height');
+					fnText(cxt,this,this.children[0].innerHTML,0,10,8,8);
+					ev.cancelBubble = true;
+				}
+			}
+
+
+
+			function fnText(cxt,obj,str,startX,startY,fontSize,disX){
+
+				var arr = ['a','d','e','f','y','r','w','t','v','o','p','＄','￡','г','％','＃'];
+				var textWidth = cxt.measureText(str).width+5;
+				cxt.font = `${fontSize}px Arial`;
+				cxt.textBaseline = 'middle';
+				cxt.fillText(str,disX,startY);
+				clearInterval(obj.timer);
+				
+				
+				obj.timer = setInterval(function(){
+					 if(x >= textWidth){
+					 	clearInterval(obj.timer);
+					 }
+	
+					 
+			 		cxt.font = `${fontSize}px Arial`;
+			 		cxt.fillStyle = "#fff";
+			 
+			 		cxt.fillRect(startX+disX, startY-(fontSize+20)/2,textWidth, fontSize+20);
+			 		cxt.fillStyle = "#000";
+			 	
+			 		cxt.fillText(str, startX + disX, startY);
+	
+			 	 
+			 		arr.sort(function(){
+			 			return Math.random() - 0.5;
+			 		});
+	
+			 		for(var i = 0;i<str.length; i++){
+	
+			 			cxt.fillStyle = "#fff";
+			 			cxt.font = `${fontSize}px Arial`;
+			 		    cxt.fillRect(x + i * fontSize+disX, startY-(fontSize+20)/2,fontSize,fontSize+20);
+			 		    fnColor();
+	
+			 			cxt.fillText(arr[i], x + i*fontSize + disX, startY);	
+			 			cxt.fillStyle = "#fff";
+	
+			 			cxt.fillRect(textWidth+disX,startY-(fontSize+10)/2,x + i*fontSize, fontSize+10);
+			 		 }
+	
+			 	  x+=10;
+				},80);
+
+			function fnColor(){
+			  	var r = Math.floor(Math.random() * 255);
+				var g = Math.floor(Math.random() * 255);
+				var b = Math.floor(Math.random() * 255);
+				colors = "rgb(" + r + "," + g + "," + b + ")";
+				cxt.fillStyle = colors;
+			}
+
+
+
+			obj.onmouseover = function(){
+			
+				x = 0;
+				
+				fnText(cxt,obj,str,startX,startY,fontSize,disX);
+
+				
+			}
+				
+		}		
+
+			
+
+		})(document);
+	</script>
+</body>
+</html>

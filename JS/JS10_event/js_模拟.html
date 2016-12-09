@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+#box1 {
+	width: 200px;
+	padding: 50px;
+	background-color: #00BFFF;
+}
+#box2 {
+	padding: 50px;
+	background-color: #008000;
+}
+#box3 {
+	padding: 50px;
+	background-color: #20F5FB;
+}
+</style>
+</head>
+<body>
+	<div id="box1">
+		<div id="box2">
+			<div id="box3"></div>
+		</div>
+	</div>
+<script>
+var div1 = document.getElementById('box1');
+var div2 = document.getElementById('box2');
+var div3 = document.getElementById('box3');
+div1.onmouseover = div2.onmouseover = div3.onmouseover = function (){
+	console.log('我是移入'+this.id);
+}
+div1.onmouseout = div2.onmouseout = div3.onmouseout = function (){
+	console.log('我是移出'+this.id);
+}
+
+</script>
+</body>
+</html>

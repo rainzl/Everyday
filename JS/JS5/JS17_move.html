@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<script src="../publicJS/Js1_publicMove.js"></script>
+<script>
+	window.onload = function () {
+		var oBtn = document.getElementsByTagName('input');
+		var oBox = document.getElementById('box');
+		oBtn[0].onclick = function () {
+			mTween(oBox,'left',1000,1000,'backOut');
+			//mTween(oBox,'opacity',100,1000,'elasticBoth');
+		}
+		oBtn[1].onclick = function () {
+			mTween(oBox,'left',0,1000,'backIn');
+			//mTween(oBox,'opacity',30,1000,'elasticBoth');
+		}
+	}
+</script>
+<style>
+#box {
+	width: 100px;
+	height: 100px;
+	background-color: #21C618;
+	position: absolute;
+	top: 50px;
+	left: 0;
+	opacity: .3;
+	filter: alpha(opacity = 30);
+}
+</style>
+</head>
+<body>
+	<input type="button" id="btn" value="跑" />
+	<input type="button" id="btn" value="停" />
+	<div id="box"></div>
+</body>
+</html>

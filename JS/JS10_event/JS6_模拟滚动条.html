@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+#wrap {
+	margin: 20px auto;
+	width: 500px;
+	border: 1px dotted #02A4C7;
+	border-radius: 10px;
+	overflow: hidden;
+}
+#scorll {
+	position: relative;
+	float: left;
+	height: 300px;
+	width: 20px;
+	background-color: #C8C8C8;
+	border-radius: 10px;
+}
+#scorll span {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	background-color: #9999FF;
+}
+#content {
+	position: relative;
+	float: right;
+	margin: 15px 25px;
+	height: 270px;
+	width: 430px;
+	overflow: hidden;
+}
+.article {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+</style>
+</head>
+<body style="height: 3000px;">
+	<section id="wrap">
+		<div id="scorll">
+			<span></span>
+		</div>
+		<div id="content">
+			<div class="article">
+				<p>倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月</p>
+				<p>倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月</p>
+				<p>倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月</p>
+				<p>倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月</p>
+				<p>倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月</p>
+				<p>倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月</p>
+				<p>倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月</p>
+				<p>倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月倒计时一个半月</p>
+			</div>
+		</div>
+	</section>
+<script src="JS/publicMain.js"></script>
+<script>
+(function() {
+	var oScorll = document.getElementById('scorll'),
+		oSpan = oScorll.getElementsByTagName('span')[0],
+		oContent = document.getElementById('content'),
+		oArticle = oContent.getElementsByClassName('article')[0];
+	
+	oSpan.addEventListener('mousedown',fnDown);
+	function fnDown(ev) {
+		var ev = ev || event;
+		var disY = ev.pageY - this.offsetTop;
+		
+		document.addEventListener('mousemove',fnMove);
+		function fnMove(ev) {
+			var ev = ev || event;
+			var t = ev.pageY - disY;
+			move(t);		
+		}
+		document.addEventListener('mouseup',fnUp);
+		function fnUp() {
+			document.removeEventListener('mousemove',fnMove);
+			document.removeEventListener('mouseup',fnUp);
+		}
+		ev.preventDefault();
+	}
+	myWheel(oScorll.parentNode,fnScorll);
+	function fnScorll(b) {
+		var t = b? oSpan.offsetTop-8: oSpan.offsetTop+8;
+		move(t);
+	}
+	function move(t) {
+		var scorllMax = oScorll.clientHeight - oSpan.offsetHeight;
+		if ( t<0 ) {
+			t = 0;
+		} else if ( t > scorllMax ) {
+			t = scorllMax;
+		}
+		oSpan.style.top = t+'px';
+		var scale = t/scorllMax;
+		oArticle.style.top = -scale*(oArticle.scrollHeight - oContent.clientHeight) + 'px';
+	}
+})()
+</script>
+</body>
+</html>

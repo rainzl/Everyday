@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<script>
+	window.onload = function () {
+		
+		var aInpt = document.getElementsByTagName('input');//获取所有的input
+		var oP = document.getElementsByTagName('p')[0];//获取p。显示剩余时间
+		timer = 0;
+		//点击设置按钮。
+		aInpt[aInpt.length - 1].onclick = function (){
+			//判断所有input是否都有值，如果没有填写，提示、将没有填写的input框聚焦，并终止函数
+			for ( var i=0; i<aInpt.length - 1; i++ ) {
+				if (aInpt[i].value == '') {
+					alert('请输入完整');
+					aInpt[i].focus();
+					return;
+				}
+			}
+			//定义一个时间对象，获取input中的每个value。添加到SDate时间对象中
+			var sDate = new Date;
+			var sYear = sDate.setFullYear(aInpt[0].value,aInpt[1].value - 1,aInpt[2].value);
+			var sHour = sDate.setHours(aInpt[3].value,aInpt[4].value,aInpt[5].value);
+			var sTime = sDate.getTime();//获取SDate这个时间对象的时间戳
+			
+			//开启一个定时器
+			clearInterval(timer);
+			timer = setInterval(
+				function (){
+				var oDate = new Date;//定义一个新的时间对象，获取现在的时间戳
+				var oTime = oDate.getTime()
+				
+				var time = sTime - oTime;//设置的时间戳和现在的时间戳差
+				if ( time < 0 ){//
+					alert('时间已经过期');
+					clearInterval(timer);
+				} else {
+					var days = parseInt(time/86400000);//一天有864000000毫秒
+					var hours = parseInt((time%86400000)/3600000);//一小时有36000000毫秒
+					var minutes = parseInt((time%3600000)/60000);//一分钟有60000毫秒
+					var secondes = parseInt((time%60000)/1000);
+					//将算出的时分秒添加给p标签
+					oP.innerHTML = '距离'+aInpt[0].value+'年'+aInpt[1].value+'月'+aInpt[2].value+'日'+aInpt[3].value+'时'+aInpt[4].value+'分'+aInpt[5].value+'秒还剩'+days+'天'+hours+'小时'+minutes+'分'+secondes+'秒'
+				}
+			},1000);
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="text" value="2016" /> 年
+	<input type="text" value="1" /> 月
+	<input type="text" value="1" /> 日
+	<input type="text" value="0" /> 时
+	<input type="text" value="0" /> 分
+	<input type="text" value="0" /> 秒
+	<input type="button" value="设置" />
+	<p></p>
+</body>
+</html>

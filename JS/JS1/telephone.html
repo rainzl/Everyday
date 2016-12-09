@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>telephonemode</title>
+	</head>
+	<style>
+		body{ margin: 0;}
+		div{ font-size: 15px;font-family: "微软雅黑"; }
+		.body{ width: 362px; height: 744px; margin: 10px auto; background: url(1.png); border-right: solid 1px #282828; position:relative; }
+		#screen{ width: 297px; height: 522px; border: solid 1px #b0b0b7; background: url(../JS2/1.jpg); position: absolute; left: 32px; top: 109px; }
+		#top{ width: 287px; height: 452px;padding: 5px; border-bottom: solid 1px #dee6e2; overflow: auto;}
+		.bottom{ border-top: solid 1px #cedad5; background: #FFFFFF; filter: alpha ( opacity:80); opacity: 0.8;}
+		.bg1{ height: 46px; margin: 8px 5px 5px; background: url(2.jpg) repeat-x 0 -46px #FFFFFF ; display: inline-block; }
+		.bg2{ height: 46px; background: url(2.jpg) no-repeat; }
+		.bg3{  background: url(2.jpg) no-repeat right -92px;}
+		img{ width: 29px; height: 29px; border: none; vertical-align: middle; padding: 8px 7px; }
+		input{ border: none; margin: 0; padding: 0;  vertical-align: middle;}
+		input:active{ border: none;}
+		#text1{ height: 36px; width: 157px; padding: 5px 10px; font-size: 16px;font-family: "微软雅黑"; }
+		#btn1{  height: 46px; font-size: 16px; margin: 8px 5px 5px; background: none; cursor: pointer;}
+		#top .left{ background: #FFFFFF; border: solid 1px #d1d0d0; border-radius: 5px; display: inline-block; padding: 10px; max-width: 72%; position: relative;}
+		#top .left div{ width: 10px; height: 20px; background: url(bg1.png);position: absolute; left: -9px; bottom: 8px;}
+		#top .right{ text-align: left; background: #a0e75a; border: solid 1px #d1d0d0; border-radius: 5px; display: inline-block; padding: 10px; max-width: 72%; position: relative;}
+		#top .right div{ width: 10px; height: 20px; background: url(bg2.png); position: absolute; bottom: 8px; right: -9px;}
+	</style>
+	<script>
+		window.onload = function () {
+			var oTop = document.getElementById('top');
+			var oImg = document.getElementById('img1');
+			var oText = document.getElementById('text1');
+			var oBtn = document.getElementById('btn1');
+			var arr = [ '2.png','3.png' ];
+			var num = 0 ;
+			
+			oImg.onclick = img ;
+			function img() {
+				num ++ ;
+				if (num == 2) {
+					num = 0 ;
+				}
+				oImg.src = arr[num];
+			}
+			
+			function creatdiv () {
+				oTop.innerHTML += ' <div></div> ';
+			}
+			oBtn.onclick = function () {
+				
+				oDiv = oTop.getElementsByTagName('div');
+				if ( oText.value == '' ) {
+					alert ( '输入内容不能为空' );
+				} else  // {
+					// creatdiv();
+					// oDiv = oTop.getElementsByTagName('div');
+					// aDiv = oDiv.length;
+					// for ( var i=aDiv-1; i>-1 ;i-- ) {
+						// oDiv[i].style.top = i*30 + 10 +'px';
+						// console.log(oText.value);
+						// console.log(oTop.innerHTML);
+						if ( num == 0 ) {
+							oTop.innerHTML =  '<div style="text-align:right">' + '<div  class="right">' + '<div>' + '</div>' + oText.value + '</div>' + oImg.outerHTML + '</div>' + oTop.innerHTML;
+							// oDiv[i].style.textAlign = 'right' ;
+						}else{
+							oTop.innerHTML = '<div style="text-align:left">' + oImg.outerHTML + '<div class="left">' + '<div>' + '</div>' + oText.value + '</div>' +'</div>' + oTop.innerHTML ;
+							// oDiv[i].style.textAlign = 'left' ;
+						}
+						// console.log(oTop.innerHTML);
+					// }
+				// } 
+				oText.value = '' ;
+			}
+		}
+	</script>
+	<body>
+		<div class="body">
+			<div id="screen">
+				<div id="top"></div>
+				
+					
+				
+				<div class="bottom">
+					<div class="bg1" >
+						<div class="bg2">
+							<div class="bg3">
+								<img id="img1" src="2.png"/>
+							</div>
+						</div>
+					</div>
+					<div class="bg1" >
+						<div class="bg2">
+							<input class="bg3" id="text1" type="text" />
+						</div>
+					</div>
+					<input id="btn1" type="button" value="发送" />
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

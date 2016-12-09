@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+</body>
+<script>
+	var str = '快过年了，准备回家，但是还没有买年货，而且还没有找工作。';
+	var re = /过年|回家|工作/g;
+	
+	var s = str.replace(re,function($0){
+		var temp = ''
+		for ( var i=0; i<$0.length; i++ ) {
+			temp += '*';
+		}
+		return temp;
+	})
+	console.log(s);
+</script>
+</html>

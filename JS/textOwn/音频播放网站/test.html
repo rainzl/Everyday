@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<canvas id="canvas2"></canvas>
+<script src="js/tabPage.js"></script>
+<script>
+	var canvas = document.getElementById('canvas');
+	var canvas2 = document.getElementById('canvas2');
+	var cxt = canvas.getContext('2d');
+	
+	
+	drawImg(cxt);
+	function drawImg(cxt) {
+		cxt.save();
+		
+		cxt.beginPath();
+		cxt.beginPath();
+		cxt.fillStyle = 'red';
+		cxt.fillRect(0,0,canvas.width,canvas.height);
+		cxt.fillStyle = 'yellow';
+		cxt.arc(100,100,50,0,2*Math.PI)
+		cxt.fill();
+		cxt.restore();
+	}
+	
+	
+	
+	
+	canvas.style.display = 'none';
+	
+	function call() {
+		canvas.style.display = 'block';
+		canvas2.style.display = 'none';
+	}
+	tab(canvas2,{
+	 	'color': '#ccc'
+	 },'k');
+</script>
+</body>
+</html>

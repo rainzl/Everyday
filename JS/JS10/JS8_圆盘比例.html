@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+body {
+	margin: 0;
+	background-color: #ddd;
+	text-align: center;
+}
+canvas{
+	background-color: #fff;
+}
+</style>
+</head>
+<body>
+	<canvas width="500px" height="500px"></canvas>
+<script>
+var  data = [
+	{
+		'num':3,
+		'name':'晚上好',
+		'color':'red'
+	},
+	{
+		'num':10,
+		'name':'晚上好',
+		'color':'blue'
+	},
+	{
+		'num':8,
+		'name':'晚上好',
+		'color':'grey'
+	},
+	{
+		'num':6,
+		'name':'晚上好',
+		'color':'green'
+	}
+];
+(function(d){
+	
+	//-用来初始化一些变量和方法--------
+	var canvas = d.getElementsByTagName('canvas')[0],
+		cxt = canvas.getContext('2d');
+		
+	var W = cxt.canvas.width, H = cxt.canvas.height;
+	var r =W/2;
+	
+	
+	//-初始化主要逻辑---------------------
+	var sum = sum();
+	drawcir(cxt);
+	
+	
+	//-需求函数化-----------------------------
+	function drawcir(cxt) {
+		var oldRad = 0;
+		var num  = 0;
+		cxt.save();
+		cxt.translate(r,r);
+		
+		
+		data.forEach(function(item,i){
+			num += parseInt(item.num);
+			var rad = (2*Math.PI/sum)*num;
+			
+			
+			cxt.beginPath();
+			cxt.moveTo(0,0);
+			cxt.fillStyle = item.color;
+			cxt.arc(0,0,r,oldRad,rad);
+			cxt.fill();
+			
+			
+			
+			var textNum = num - item.num/2;
+			var textRad = (2*Math.PI/sum)*textNum;
+			var x = Math.cos(textRad)*(r-50),
+				y = Math.sin(textRad)*(r-50);
+			
+			cxt.font = '18px "宋体"';
+			cxt.textAlign = 'center';
+			cxt.textBaseline = 'middle';
+			cxt.fillStyle = '#fff';
+			cxt.fillText(item.name,x,y);
+			
+			cxt.closePath();
+			oldRad = rad;
+		});
+		cxt.restore();
+	}
+	function sum(){
+		var num = 0;
+		data.forEach(function(item){
+			num = num + parseFloat(item.num);
+		})
+		return num;
+	}
+	
+	
+})(document)
+
+</script>
+</body>
+</html>

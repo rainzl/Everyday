@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+html,
+body {
+	width: 100%;
+	height: 100%;	
+}
+body {
+	margin: 0;
+	background-color: #ddd;
+	position: relative;
+}
+nav {
+	position: relative;
+	height: 60px;
+	line-height: 60px;
+	background-color: #ddd;
+	z-index: 2;
+}
+.page1,
+.page2,
+.page3 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	opacity: 0;
+}
+.page1 div,
+.page2 div,
+.page3 div {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -100px;
+	margin-left: -150px;
+	width: 300px;
+	height: 200px;
+}
+.page1 {
+	background-color: #00BFFF;
+}
+.page1 div {
+	background-color: #fff;
+}
+.page2 {
+	background-color: #5D9FC8;
+}
+.page2 div {
+	background-color: #E2E7FC;
+}
+.page3 {
+	background-color: #B4C88B;
+}
+.page3 div {
+	background-color: #EAF1DB;
+}
+</style>
+</head>
+<body>
+<nav>
+	<a href="#div1">第一个页面</a>
+	<a href="#div2">第二个页面</a>
+	<a href="#div3">第三个页面</a>
+	<a href="?=js">我是name</a>
+</nav>
+<div class="page1">
+	<div>我是第一个页面</div>
+</div>
+<div class="page2">
+	<div>我是第二个页面</div>
+</div>
+<div class="page3">
+	<div>我是第三个页面</div>
+</div>
+
+<script src="JS/publicMain.js"></script>
+<script>
+var oPage1 = document.getElementsByClassName('page1')[0];
+var oPage2 = document.getElementsByClassName('page2')[0];
+var oPage3 = document.getElementsByClassName('page3')[0];
+var hash = window.location.hash;
+var search = window.location.search;
+window.onhashchange = hid;
+
+
+show();
+
+
+function hid() {
+	switch (hash) {
+		case '#div1':
+			mTween(oPage1,{'opacity':0},400,'linear',function(){
+				show();
+			});
+			break;
+		case '#div2':
+			mTween(oPage2,{'opacity':0},400,'linear',function(){
+				show();
+			});
+			break;
+		case '#div3':
+			mTween(oPage3,{'opacity':0},400,'linear',function(){
+				show();
+			});
+			break;
+		default:
+			mTween(oPage1,{'opacity':0},400,'linear',function(){
+				show();
+			});
+			break;
+	}
+}
+
+function show() {
+	hash = window.location.hash;	
+	search = window.location.search;
+	console.log(search);
+	switch (hash) {
+		case '#div1':
+			p1Show();
+			break;
+		case '#div2':
+			p2Show();
+			break;
+		case '#div3':
+			p3Show();
+			break;
+		default:
+			p1Show();
+			break;
+	}
+}
+function p1Hid() {
+	mTween(oPage1,{'opacity':0},400,'linear');
+}
+function p2Hid() {
+	mTween(oPage2,{'opacity':0},400,'linear');
+}
+function p3Hid() {
+	mTween(oPage3,{'opacity':0},400,'linear');
+}
+function p1Show() {
+	mTween(oPage1,{'opacity':100},400,'linear');
+}
+function p2Show() {
+	mTween(oPage2,{'opacity':100},400,'linear');
+}
+function p3Show() {
+	mTween(oPage3,{'opacity':100},400,'linear');
+}
+</script>
+</body>
+</html>

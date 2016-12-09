@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+.active {
+	background-color: #B0E0E6;
+}
+</style>
+<script type="text/javascript" src="../publicJS/Js1_publicMove.js" ></script>
+<script>
+	window.onload = function () {
+		var arr = [];
+		var oUl = getId('ul');
+		var aUls = getTag(oUl,'ul');
+		var num = 0;
+		var timer = 0;
+		var speed = 1;
+		for ( var i=0; i<aUls.length; i++ ) {
+			var aLis = getTag(aUls[i],'li');
+			for ( var j=0; j<aLis.length; j++ ) {
+				arr.push(aLis[j]);
+			}
+		}
+		arr[num].className = 'active';
+		timer = setInterval(
+			function(){
+				arr[num].className = '';
+				num += speed;
+				if (num >= arr.length - 1 ||  num <= 0) {
+					speed = -speed;
+				}
+				arr[num].className = 'active';
+			},1000
+		);
+	}
+</script>
+</head>
+<body>
+<ul id="ul">
+	<li>
+		<ul>
+			<li>第一个</li>
+			<li>第二个</li>
+			<li>第三个</li>
+			<li>第四个</li>
+		</ul>
+	</li>
+	<li>
+		<ul>
+			<li>第五个</li>
+			<li>第六个</li>
+			<li>第七个</li>
+		</ul>
+	</li>
+	<li>
+		<ul>
+			<li>第八个</li>
+			<li>第九个</li>
+			<li>第十个</li>
+		</ul>
+	</li>
+</ul>
+</body>
+</html>

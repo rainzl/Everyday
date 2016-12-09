@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	color: #666;
+}
+h2 {
+	margin: 0;
+}
+a {
+	text-decoration: none;
+	color: #666;
+}
+.grade1 {
+	margin: 0 auto;
+	width: 600px;
+	height: 50px;
+	border-bottom: 3px solid #E0B03D;
+	background-color: #A8A8A8;
+}
+.grade1 li {
+	position: relative;
+	float: left;
+	width: 200px;
+	height: 50px;
+}
+.grade1 li h2 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 2px;
+	width: 196px;
+	height: 42px;
+	border-left: 1px solid #F6F6F6;
+	border-right: 1px solid #F6F6F6;
+	font: bold 28px/50px "宋体";
+	text-align: center;
+	color: #fff;
+}
+.grade1 ul {
+	display: none;
+}
+.grade1 .active ul {
+	display: block;
+}
+.grade1 .active {
+	z-index: 3;
+}
+.grade1 .active h2 {
+	padding: 0;
+	border: 2px solid #1E90FF;
+	border-bottom:none;
+	background-color: #ccc;
+	z-index: 2;
+}
+.grade2 {
+	position: absolute;
+	top: 42px;
+	left: 0;
+	width: 260px;
+	border: 2px solid #1E90FF;
+	background-color: #CCCCCC;
+}
+.grade2 li {
+	width: 260px;
+	position: relative;
+	border-bottom: 2px solid #A8A8A8;
+}
+.grade1 .grade2 h2 {
+	position: relative;
+	padding: 1px;
+	padding-right: 0;
+	width: 259px;
+	border: none;
+	text-align: left;
+	text-indent: 10px;
+	font: 16px/36px "宋体";
+	z-index: 2;
+}
+.grade2 .active h2 {
+	border: 1px solid red;
+	border-right: none;
+	padding: 0;
+	width: 239px;
+	background-color: #fff;
+	color: #333;
+}
+.grade1 .grade2 ul {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 239px;
+	width: 300px;
+	border: 1px solid red;
+	background-color: #fff;
+	z-index: 1;
+}
+.grade2 .active ul {
+	display: block;
+}
+
+.grade2 .grade3 h2 {
+	border: none;
+}
+.grade3 li {
+	width: 100%;
+	border: none;
+}
+.grade2 .grade3 h2 {
+	width: 100%;
+}
+.grade3 .active h2 {
+	color: red;
+}
+.hid {
+	display: none;
+}
+.show {
+	display: block;
+}
+</style>
+</head>
+<body>
+	<ul id="menu" class="grade1">
+	</ul>
+<script>
+
+var data = '[{"title":"所有分类","grade":"2","child":[{"title":"数码家电","grade":"3","child":[{"title":"收纳存储"},{"title":"收纳存储"},{"title":"收纳存储"},{"title":"收纳存储"}]},{"title":"户外运动","grade":"3","child":[{"title":"床上用品"},{"title":"床上用品"},{"title":"床上用品"},{"title":"床上用品"}]},{"title":"妙味课堂","grade":"3","child":[{"title":"餐具茶杯"},{"title":"餐具茶杯"},{"title":"餐具茶杯"},{"title":"餐具茶杯"}]}]},{"title":"家居家电","grade":"2","child":[{"title":"数码家电","grade":"3","child":[{"title":"收纳存储"},{"title":"收纳存储"},{"title":"收纳存储"},{"title":"收纳存储"}]},{"title":"户外运动","grade":"3","child":[{"title":"床上用品"},{"title":"床上用品"},{"title":"床上用品"},{"title":"床上用品"}]},{"title":"妙味课堂","grade":"3","child":[{"title":"餐具茶杯"},{"title":"餐具茶杯"},{"title":"餐具茶杯"},{"title":"餐具茶杯"}]}]},{"title":"妙味视频","grade":"2","child":[{"title":"数码家电","grade":"3","child":[{"title":"收纳存储"},{"title":"收纳存储"},{"title":"收纳存储"},{"title":"收纳存储"}]},{"title":"户外运动","grade":"3","child":[{"title":"床上用品"},{"title":"床上用品"},{"title":"床上用品"},{"title":"床上用品"}]},{"title":"妙味课堂","grade":"3","child":[{"title":"餐具茶杯"},{"title":"餐具茶杯"},{"title":"餐具茶杯"},{"title":"餐具茶杯"}]}]}]';
+var aRrData = [];
+aRrData = JSON.parse(data);
+
+var oMenu = document.getElementById('menu');
+createMenu(aRrData,oMenu,1);
+function createMenu(obj,oul,n) {
+	n++;
+	obj.forEach(function(item){
+		var li = document.createElement('li');
+		var h2 = document.createElement('h2');
+		h2.innerHTML = item.title;
+		if ( item.child ) {
+			var ul = document.createElement('ul');
+			ul.className = 'grade'+ n;
+			createMenu(item.child,ul,n);
+			
+			li.appendChild(h2);
+			li.appendChild(ul);
+		} else {
+			li.appendChild(h2);
+		}
+		oul.appendChild(li);
+	});
+	
+}
+
+
+
+//--------------------生成页面结构结束------------------------
+
+
+var aLis = document.getElementsByTagName('li');
+
+for ( var i=0; i<aLis.length; i++ ) {
+	aLis[i].onmouseover = function () {
+		this.className = 'active';
+	}
+	aLis[i].onmouseout = function () {
+		this.className = '';
+	}
+}
+</script>
+</body>
+</html>

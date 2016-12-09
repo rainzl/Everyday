@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+body {
+	perspective: 3000px;
+}
+section {
+	position: relative;
+	margin: 200px auto;
+	width: 1000px;
+	height: 384px;
+	/*transform-origin: 150px 0 -200px;*/
+	transform-style: preserve-3d;
+	transform-origin: center center -250px;
+	transition: 5s;
+}
+img {
+	top: 0;
+	left: 0;
+	width: 500px;
+	height: 384px;
+	position: absolute;
+	transform-origin: center center -250px;
+	transition: 1s;
+}
+/*section:hover {
+	transform: rotateY(360deg);
+}*/
+.img0{
+	transform: translate3d(250px,0,50px);
+}
+.img1{
+	transform: translate3d( 750px,-50px,-200px );
+}
+.img2{
+	transform: translate3d( 250px,-200px,-500px );
+}
+.img3{
+	transform: translate3d( -260px,-50px,-200px );
+}
+</style>
+<script>
+	window.onload = function () {
+		var aImgs = document.querySelectorAll('#img img');
+		for ( var i=0;i<aImgs.length;i++ ) {
+			aImgs[i].className = 'img' + i;
+			aImgs[i].index = i;
+			aImgs[i].onclick = function () {
+				for ( var i=0; i<aImgs.length; i++ ) {
+					aImgs[i].index = (i+4-this.index)%4;
+					//this.index = 0;
+					aImgs[i].className = 'img' + aImgs[i].index;
+				}
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<section id="img">
+		<img src="../JS3/text3/1.jpg" />
+		<img src="../JS3/text3/2.jpg" />
+		<img src="../JS3/text3/3.jpg" />
+		<img src="../JS3/text3/4.jpg" />
+	</section>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+#list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	width: 200px;
+	height: 500px;
+}
+#list li {
+	width: 200px;
+	height: 38px;
+	border: 1px solid #fff;
+	background-color: #ccc;
+}
+#list .none {
+	background-color: #666;
+}
+#list .side {
+	background-color: orange;
+}
+#list .focus {
+	background-color: #E0B03D;
+}
+#list .near {
+	background-color: #D9E3CA;
+}
+</style>
+</head>
+<body>
+	<ul id="list">
+		<li class="none"></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li class="none"></li>
+	</ul>
+<!-- 首行和末行添加class none
+	移出之后class变为 side
+别的class默认是没有class
+	移入之后class 当前的是focus ，兄弟元素是near
+
+思路： 
+	循环所有的li
+	把第一个和最后一个拿到
+	鼠标移入：   	判断元素是否是第一个和最后一个，
+				如果是：class为side
+				如果不是： 	
+					当前元素class为 focus，
+					previousElementSibling和nextElementSibling的class为near
+					第一个和最后一个的class为 none;
+	鼠标移出: 	清除所有li的class
+				第一个和最后一个的class 为 none-->
+<script>
+var oLi = document.getElementById('list');
+var aLis = oLi.children;
+var first = oLi.firstElementChild;
+var last = oLi.lastElementChild;
+for ( var i=0; i<aLis.length; i++ ) {
+	aLis[i].onmouseover = function () {
+		if ( this == first|| this == last ) {
+			this.className = 'side';
+		} else {
+			this.className = 'focus';
+			this.previousElementSibling.className = 'near';
+			this.nextElementSibling.className = 'near';
+			first.className = 'none';
+			last.className = 'none';
+		}
+	}
+	aLis[i].onmouseout = function () {
+		for ( var i=0; i<aLis.length; i++ ) {
+			aLis[i].className = '';
+		}
+		first.className = 'none';
+		last.className = 'none';
+	}
+}
+</script>
+</body>
+</html>

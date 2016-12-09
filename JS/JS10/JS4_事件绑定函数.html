@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+div {
+	width: 100px;
+	height: 100px;
+	background-color: #00BFFF;
+}
+</style>
+</head>
+<body>
+	<div>nihao</div>
+<script>
+var div = document.getElementsByTagName('div')[0];
+function fn1() {
+	alert(this.innerHTML);
+}
+function fn2() {
+	alert(this.nodeName);
+}
+bind(div,'click',fn1);
+bind(div,'click',fn2);
+function bind(obj, evname, fn) {
+	if ( obj.addEventListener ) {
+		obj.addEventListener(evname,fn,false);
+	} else  {
+		obj.attachEvent('on'+ evname, function(){
+			fn.call(obj);
+		});
+	}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style type="text/css">
+ul {
+	margin: 60px auto 10px;
+	padding: 0;
+	list-style: none;
+	width: 600px;
+	text-align: center;
+}
+td{
+	text-align: center;
+}
+li {
+	padding: 10px 0;
+	overflow: hidden;
+}
+label {
+	display: inline-block;
+}
+input[type="text"] {
+	border: 1px solid #ccc;
+	width: 80px;
+	height: 20px;
+}
+</style>
+</head>
+<body>
+<section>
+	<ul id="header">
+		<li class="addPre">
+			<label>商品名： <input type="text" name="" /></label>
+			<label>价格： <input type="text" /></label>
+			<label>销量： <input type="text" /></label>
+			<input type="button" value="添加" />
+		</li>
+		<li>
+			<span>排序</span>
+			<select>
+				<option index="price">价格</option>
+				<option index="sal">销量</option>
+			</select>
+			<select>
+				<option index='1'>从高到底</option>
+				<option index='2'>从低到高</option>
+			</select>
+			<input type="button" value="提交" />
+		</li>
+	</ul>
+	<table id="tab" width="600" align="center" border="1">
+		<thead>
+			<th>商品</th>
+			<th index="price">价格</th>
+			<th index="sal">销量</th>
+			<th>操作</th>
+		</thead>
+		<tbody>
+			<tr>
+				<td>苹果</td>
+				<td>3700</td>
+				<td>1000</td>
+				<td>
+					<input type="button" value="删除"/>
+					<input type="button" value="上移">
+					<input type="button" value="下移">
+				</td>
+			</tr>
+			<tr>
+				<td>锤子</td>
+				<td>2499</td>
+				<td>100</td>
+				<td>
+					<input type="button" value="删除"/>
+					<input type="button" value="上移">
+					<input type="button" value="下移">
+				</td>
+			</tr>
+			<tr>
+				<td>小米</td>
+				<td>3299</td>
+				<td>100000</td>
+				<td>
+					<input type="button" value="删除"/>
+					<input type="button" value="上移">
+					<input type="button" value="下移">
+				</td>
+			</tr>
+			<tr>
+				<td>坚果</td>
+				<td>799</td>
+				<td>900</td>
+				<td>
+					<input type="button" value="删除"/>
+					<input type="button" value="上移">
+					<input type="button" value="下移">
+				</td>
+			</tr>
+			<tr>
+				<td>桔子</td>
+				<td>1799</td>
+				<td>10</td>
+				<td>
+					<input type="button" value="删除"/>
+					<input type="button" value="上移">
+					<input type="button" value="下移">
+				</td>
+			</tr>
+			<tr>
+				<td>梨子</td>
+				<td>1199</td>
+				<td>80</td>
+				<td>
+					<input type="button" value="删除"/>
+					<input type="button" value="上移">
+					<input type="button" value="下移">
+				</td>
+			</tr>
+		</tbody>
+	</table>	
+</section>
+</body>
+<script src="js/jquery-3.1.1.js"></script>
+<script>
+$(function(){
+	var $header = $('#header');
+	var $tab = $('#tab').find('tbody').eq(0);
+	
+	
+	fnAddPre();
+	fnTab();
+	fnAddSort();
+	
+	function fnTab() {
+		var $tr = $tab.find('tr');
+		$tr.each(function(i,item){ //each里面的的item是原生对象
+			var $td = $(item).find('td').last();
+			addEvent($td)
+		})
+	}
+	function fnAddSort() {
+		var $li = $header.children().eq(1);
+		var $input = $li.find('input');//提交按钮
+		var $condition = $li.find('select').eq(0);
+		var $order = $li.find('select').eq(1);
+		
+		$input.click(function(){
+			var index = getIndex($condition);
+			var order = getIndex($order);
+			var $tdIndex = $('#tab').find('[index="'+index+'"]').index();
+			fnSort($tdIndex,order)
+		});
+	}
+	//获取select的index
+	function getIndex(select) {
+		var $option = select.find('option');
+		var index = null;
+		$option.each(function(i,item){
+			if ( select.val() == $(item).val() ) {
+				index = $(item).attr('index');
+			}
+		})
+		return index;
+	}
+	//排序函数
+	function fnSort(index,order) {//order: (1:从高到底; 2:从低到高) index:判断根据第几列排序
+		var arr = [];//存储每一行
+		$tab.find('tr').each(function(i,item){
+			arr.push(item);
+		})
+		if (order == 1) {
+			arr.sort(function(a,b){
+				return $(a.cells[index]).html() - $(b.cells[index]).html(); //1:从高到低
+			})
+		} else {
+			arr.sort(function(a,b){
+				return $(b.cells[index]).html() - $(a.cells[index]).html(); //2:从低到高
+			})
+		}
+		for ( var i=0; i<arr.length; i++ ) {
+			$tab.append(arr[i]);
+		}
+	}
+	//添加商品函数
+	function fnAddPre() {
+		var $input = $header.children().eq(0).find('input');
+		$input.eq($input.length-1).click(function(){
+			var name = $input.eq(0).val();
+			var price = $input.eq(1).val();
+			var sal = $input.eq(2).val();
+			
+			var $tr = $tab.find('tr').first().clone();
+			var $td = $tr.find('td');
+			$td.eq(0).html(name);
+			$td.eq(1).html(price);
+			$td.eq(2).html(sal);
+			
+			addEvent($td.eq(3))
+			$tr.appendTo($tab);
+		});
+	}
+	function addEvent(td) {
+		var $input = td.children();
+		//删除
+		$input.eq(0).click(function(){
+			$(this).closest('tr').remove();
+		})
+		//上移
+		$input.eq(1).click(function(){
+			var $tr = $(this).closest('tr');
+			$tr.after($tr.prev());
+		})
+		//下移
+		$input.eq(2).click(function(){
+			var $tr = $(this).closest('tr');
+			$tr.before($tr.next());
+		})
+	}
+})
+</script>
+</html>

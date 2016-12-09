@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+p,
+h2 {
+	margin: 0;
+}
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+</style>
+</head>
+<body>
+	<form>
+		<ul id="form">
+			<li>
+				<span>id</span>
+				<input type="text" />
+			</li>
+			<li>
+				<span>name</span>
+				<input type="text" />
+			</li>
+			<li>
+				<span>smallImg</span>
+				<input type="text" />
+			</li>
+			<li>
+				<span>bigImg</span>
+				<input type="text" />
+			</li>
+			<li>
+				<span>mp4</span>
+				<input type="text" />
+			</li>
+			<li>
+				<span>color</span>
+				<input type="text" />
+			</li>
+			<li>
+				<p>info</p>
+				<ul>
+					<li>
+						<span>caption</span>
+						<input type="text" />
+					</li>
+					<li>
+						<span>author</span>
+						<input type="text" />
+					</li>
+					<li>
+						<span>date</span>
+						<input type="text" />
+					</li>
+					<li>
+						<span>fansNum</span>
+						<input type="text" />
+					</li>
+					<li>
+						<span>recom</span>
+						<input type="text" />
+					</li>
+					<li>
+						<h2>message</h2>
+						<ul>
+							<li>
+								<span>user</span>
+								<input type="text" />
+							</li>
+							<li>
+								<span>mes</span>
+								<input type="text" />
+							</li>
+							<li>
+								<span>ago</span>
+								<input type="text" />
+							</li>
+							<li>
+								<span>goodNum</span>
+								<input type="text" />
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<input id="btn" type="button" value="生成" />
+	</form>
+<script>
+var btn = document.getElementById('btn');
+var form = document.getElementById('form');
+var arr = [];
+
+btn.onclick = function () {
+	arr.push(creat(form));
+	//if (arr.length>=30) {
+		console.log(JSON.stringify(arr));
+	//}
+}
+function creat(form) {
+	
+	var lis = form.children;
+	var arr = [];
+	
+	for ( var i=0; i<lis.length; i++ ) {
+		var attr = lis[i].children[0].innerHTML;
+		var cont = null
+		var j = {}
+		if ( lis[i].children[1].nodeName.toLowerCase() == 'ul' ) {
+			cont = creat(lis[i].children[1]);
+		} else {
+			cont = lis[i].children[1].value; 
+		}
+		j[attr] = cont
+	}
+	arr.push(j);
+	return arr;
+}
+</script>
+</body>
+</html>

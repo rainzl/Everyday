@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+		body{ margin:0; }
+			#canvas{
+				display: block;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<script>	
+			
+			/////////////////////////////////////////////
+			var canvas = document.getElementById('canvas');
+			var cxt = canvas.getContext('2d');
+			
+			var W = window.innerWidth,H = window.innerHeight;
+			var L = 120,T = 120;//第一个小球圆心的位置
+			var R = 60, disRx = 30, disRy = 60;
+			var rows = 2,cells = 5;//设置页面中有两行小球，每一行有3个，自适应接口
+
+			
+			var defineArr = [];
+			canvas.width = W;
+			canvas.height = H;
+			defineAttr(L,T,rows,cells);
+			function defineAttr(x,y,rows,cells){
+				for(var i = 0; i < rows ; i++ ){
+					for(var j = 0;j< cells ;j++){
+						var ball = {
+							x: x + 2*j*(R + disRx),
+							y: y + 2*i*(R + disRy),
+							vx:0,
+							vy:20,
+							g:2,
+							r:parseInt(Math.random()*10 + 30),
+							time:parseInt(Math.random()*100 + 1000)
+						}
+						if(i>0){
+							ball.vy =0;
+						}
+						defineArr.push(ball);
+					}
+				}
+			}
+	
+			getAll();
+			
+			function getAll(){
+				for(var i = 0;i < defineArr.length;i++){
+					(function (index) {
+					    setTimeout(function(){
+					    	wss_mTween(defineArr[index],R,500,cxt);
+					    },50*(index+1));
+					})(i)
+				}
+			}
+			function fn (cxt,x,y,r) {
+				cxt.clearRect(x - (r+1), y - (r+1), 2*(r+1), 2*(r+1));
+			    cxt.save();
+			    cxt.fillStyle = 'red';
+			    cxt.beginPath();
+			    cxt.arc(x,y,r,0,2*Math.PI);
+			    cxt.fill();
+			    cxt.restore();
+			}
+			function backOut(t, b, c, d, s){
+				if (typeof s == 'undefined') {
+					s = 2.70158;  //回缩的距离
+				}
+				return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+			}
+			
+			function wss_mTween(el,target,time,cxt) {
+				var t = 0;
+				var b = el.r; 
+				var c = target - el.r; 
+				var d = time/20; 
+				clearInterval(el.timer);
+				el.timer = setInterval(function(){
+					t++;
+					if(t > d) { 
+						fn(cxt,el.x,el.y,target);
+						clearInterval(el.timer); 
+					} else {
+						var val = backOut(t,b,c,d);
+						fn(cxt,el.x,el.y,val);
+					}
+				},20);
+			}
+			
+			
+		</script>
+	</body>
+</html>

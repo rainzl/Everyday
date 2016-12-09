@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<script>
+	window.onload = function () {
+		var aBtns = document.querySelectorAll('#btn input');
+		var aUL = document.getElementById('ul');
+		var aUls = aUL.getElementsByTagName('ul');
+		var ul = 0;
+		var li = 0;
+		aBtns[2].onclick = function () {
+			var ulNum = parseInt(aBtns[0].value);
+			var liNum = parseInt(aBtns[1].value);
+			var oldLi = aUls[ul].getElementsByTagName('li')[li];
+			var oLi = aUls[ulNum].getElementsByTagName('li')[liNum];
+			oldLi.style.backgroundColor = '';
+			oLi.style.backgroundColor = 'red';
+			ul = ulNum;
+			li = liNum;
+		}
+		aBtns[3].onclick = function () {
+			var ulNum = parseInt(aBtns[0].value);
+			var liNum = parseInt(aBtns[1].value);
+			str = '';
+			for ( i=0; i<ulNum; i++ ) {
+				str += '<li><ul>';
+				for ( j=0;j<liNum; j++ ) {
+					str += '<li>第'+ (aUls.length + i)+'个ul中的第'+ j +'个li</li>';
+				}
+				str += '</ul></li>';
+			}
+			aUL.innerHTML += str;
+		}
+	}
+</script>
+</head>
+<body>
+	<header id="btn">
+		<span>第</span>
+		<input type="text" />
+		<span>个ul下的第</span>
+		<input type="text" />
+		<span>个li</span>
+		<input type="button" value="设置" />
+		<input type="button" value="创建" />
+	</header>
+	<ul id="ul">
+		<li>
+			<ul>
+				<li>我是第0个ul下的第0个li</li>
+				<li>我是第0个ul下的第1个li</li>
+				<li>我是第0个ul下的第2个li</li>
+				<li>我是第0个ul下的第3个li</li>
+			</ul>
+		</li>
+		<li>
+			<ul>
+				<li>我是第1个ul下的第0个li</li>
+				<li>我是第1个ul下的第1个li</li>
+				<li>我是第1个ul下的第2个li</li>
+				<li>我是第1个ul下的第3个li</li>
+				<li>我是第1个ul下的第4个li</li>
+				<li>我是第1个ul下的第5个li</li>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>
