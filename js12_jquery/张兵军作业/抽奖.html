@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#list {
+	position: relative;
+	margin: 100px auto;
+	width: 300px;
+	height: 300px;
+	border: 1px solid #ccc;
+}
+#list li {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 98px;
+	height: 98px;
+	border: 1px solid #ccc;
+	text-align: center;
+	line-height: 98px;
+	font-size: 50px;
+	color: #fff;
+	background-color: #ddd;
+}
+#list .active {
+	background-color: #ccc;
+}
+#list .left0 {
+	left: 0;
+}
+#list .left1 {
+	left: 100px;
+}
+#list .left2 {
+	left: 200px;
+}
+#list .top0 {
+	top: 0px;
+}
+#list .top1 {
+	top: 100px;
+}
+#list .top2 {
+	top: 200px;
+}
+</style>
+</head>
+<body>
+	<ul id="list">
+		<li class="left0 top0">1</li>
+		<li class="left1 top0">2</li>
+		<li class="left2 top0">3</li>
+		<li class="left2 top1">4</li>
+		<li class="left2 top2">5</li>
+		<li class="left1 top2">6</li>
+		<li class="left0 top2">7</li>
+		<li class="left0 top1">8</li>
+	</ul>
+	<input type="button" value="开始摇号" id="btn" />
+</body>
+<script src="js/jquery-3.1.1.js"></script>
+<script>
+$(function(){
+	var $lis = $('#list').find('li');
+	var $btn = $('#btn');
+	var num = 0;
+	$lis.removeClass('active').eq(num).addClass('active');
+	$btn.click(function(){
+		fnDelay(600,true)
+	})
+	function fnDelay(delay,onOff) {
+		setTimeout(function(){
+			num ++;
+			num %= $lis.length;
+			$lis.removeClass('active').eq(num).addClass('active');
+			onOff? delay -= parseInt(Math.random()*50): delay += parseInt(Math.random()*100);
+			if ( delay <= 600 ) {
+				if ( delay<=100 ) onOff = false;
+				fnDelay(delay,onOff);
+			}
+		},delay)
+	}
+})
+</script>
+</html>

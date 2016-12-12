@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+h1{
+	margin: 0;
+}
+ul,
+li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#list li {
+	padding-left: 20px;
+}
+#list h1 {
+	font: 16px/30px "宋体";
+}
+#list li span {
+	
+}
+.hid>h1:before {
+	content: '+';
+	display: inline;
+	padding: 0 10px;
+	font: bold 16px/30px "微软雅黑";
+}
+.hid>ul {
+	display: none;
+}
+.show>h1:before {
+	content: '-';
+	display: inline;
+	padding: 0 10px;
+	font: bold 16px/30px "微软雅黑";
+}
+.show>ul {
+	display: block;
+}
+</style>
+</head>
+<body>
+	<div >
+		<ul id="list">
+			<!--<li class="show">
+				<h1>一级菜单</h1>
+				<ul>
+					<li>二级菜单</h1>
+						<ul>
+							<li><h1>三级菜单</h1></li>
+							<li><h1>三级菜单</h1></li>
+						</ul>
+					</li>
+					<li><h1>二级菜单</h1></li>
+					<li><h1>二级菜单</h1></li>
+				</ul>
+			</li>-->
+		</ul>
+	</div>
+</body>
+<script src="js/jquery-3.1.1.js"></script>
+<script>
+var data = '[{"title":"一级菜单1","child":[{"title":"二级菜单1","child":[{"title":"三级菜单"},{"title":"三级菜单"}]},{"title":"二级菜单","child":[{"title":"三级菜单","child":[{"title":"四级菜单"},{"title":"四级菜单"}]},{"title":"三级菜单"}]}]},{"title":"一级菜单","child":[{"title":"二级菜单","child":[{"title":"三级菜单"},{"title":"三级菜单"}]},{"title":"二级菜单","child":[{"title":"三级菜单","child":[{"title":"四级菜单"},{"title":"四级菜单"}]},{"title":"三级菜单"}]}]}]';
+$(function(){
+	var data1 = JSON.parse(data);
+	var $list = $('#list');
+	
+	$list.html(fnCreat(data1))
+	
+	fnShow($list);
+	
+	function fnCreat(data,obj) {
+		var arr = [];
+		for ( var i=0; i<data.length; i++ ) {
+			(function(i){
+				if ( data[i].child ) {
+					arr.push('<li class="hid"><h1>'+data[i].title+'</h1><ul>'+fnCreat(data[i].child)+'</ul></li>');
+				} else {
+					arr.push('<li><h1>'+data[i].title+'</h1></li>');
+				}
+			})(i)
+		}
+		return arr.join('');
+	}
+	
+	
+	function fnShow(ul) {
+		ul.find('li').click(function(ev){
+			if ( $(this).attr('onOff') == 'true' ) {
+				$(this).removeClass('show').addClass('hid').attr('onOff',false);
+				
+			} else {
+				$(this).removeClass('hid').addClass('show').attr('onOff',true);
+			}
+			ev.stopPropagation();
+		});
+	}
+})
+</script>
+</html>

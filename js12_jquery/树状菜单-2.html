@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+h1{
+	margin: 0;
+}
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#list li {
+	padding-left: 20px;
+}
+#list h1 {
+	font: 16px/30px "宋体";
+}
+#list li span {
+	padding: 0 10px;
+	font: bold 16px/30px "微软雅黑";
+}
+#list .show h1:before{
+	content: '-';
+}
+#list .show ul {
+	display: block;
+}
+#list .hid h1:before{
+	content: '+';
+}
+#list .hid ul {
+	display: none;
+}
+
+</style>
+</head>
+<body>
+	<ul id="list">
+		<li>
+			<h1>一级菜单</h1>
+			<ul class="hid">
+				<li>
+					<h1>二级菜单</h1>
+					<ul>
+						<li><h1>三级菜单</h1></li>
+						<li><h1>三级菜单</h1></li>
+					</ul>
+				</li>
+				<li><h1>二级菜单</h1></li>
+				<li><h1>二级菜单</h1></li>
+			</ul>
+		</li>
+		<li>
+			<h1><span>+</span>一级菜单</h1>
+			<ul>
+				<li>
+					<h1><span>+</span>二级菜单</h1>
+					<ul>
+						<li><h1>三级菜单</h1></li>
+						<li><h1>三级菜单</h1></li>
+					</ul>
+				</li>
+				<li><h1>二级菜单</h1></li>
+				<li><h1>二级菜单</h1></li>
+			</ul>
+		</li>
+		<li>
+			<h1><span>+</span>一级菜单</h1>
+			<ul>
+				<li>
+					<h1><span>+</span>二级菜单</h1>
+					<ul>
+						<li><h1>三级菜单</h1></li>
+						<li><h1>三级菜单</h1></li>
+					</ul>
+				</li>
+				<li><h1>二级菜单</h1></li>
+				<li><h1>二级菜单</h1></li>
+			</ul>
+		</li>
+		<li>
+			<h1><span>+</span>一级菜单</h1>
+			<ul>
+				<li>
+					<h1><span>+</span>二级菜单</h1>
+					<ul>
+						<li><h1>三级菜单</h1></li>
+						<li><h1>三级菜单</h1></li>
+					</ul>
+				</li>
+				<li><h1>二级菜单</h1></li>
+				<li><h1>二级菜单</h1></li>
+			</ul>
+		</li>
+	</ul>
+</body>
+<script src="js/jquery-3.1.1.js"></script>
+<script>
+$(function(){
+	var $list = $('#list');
+	fnShow($list);
+	
+	function fnShow(ul) {
+		ul.find('h1').click(function(){
+			if ( $(this).next()&&$(this).next()[0].style.display == 'block' ) {
+				$(this).parent().find('span').html('+');
+				$(this).parent().find('ul').hide();
+			} else {
+				$(this).find('span').first().html('-');
+				$(this).parent().siblings().find('span').html('+');
+				$(this).parent().siblings().find('ul').hide();
+				$(this).next().show();
+			}
+		})
+	}
+})
+</script>
+</html>

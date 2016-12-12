@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#imgTab {
+	position: relative;
+	margin: 50px auto;
+	width: 600px;
+	height: 400px;
+	border: 5px solid #ccc;
+	overflow: hidden;
+}
+#imgTab ul {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+#imgTab li {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+#imgTab img {
+	width: 600px;
+	height: 400px;
+}
+#imgTab footer {
+	position: absolute;
+	top: 85%;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	z-index: 10;
+}
+#imgTab footer span {
+	display: inline-block;
+	margin: 0 2px;
+	width: 10px;
+	height: 10px;
+	background-color: #FFE4C4;
+	border-radius: 50%;
+	cursor: pointer;
+}
+#imgTab .active {
+	background-color: #FD5C3B;
+}
+#imgTab .prev {
+	position: absolute;
+	top: 40%;
+	left: 0;
+	width: 50px;
+	height: 50px;
+	font-size: 30px;
+	line-height: 50px;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	background: rgba(220,150,80,.5);
+	border-radius: 50%;
+	z-index: 5;
+	cursor: pointer;
+}
+#imgTab .next {
+	position: absolute;
+	top: 40%;
+	right: 0;
+	width: 50px;
+	height: 50px;
+	font-size: 30px;
+	line-height: 50px;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	background: rgba(220,150,80,.5);
+	border-radius: 50%;
+	z-index: 5;
+	cursor: pointer;
+}
+#imgTab .next:hover,
+#imgTab .prev:hover{
+	background: rgba(220,150,80,.8);
+}
+</style>
+</head>
+<body>
+	<div id="imgTab">
+		<!--<ul>
+			<li>
+				<img src="img/1.jpg" />
+			</li>
+			<li>
+				<img src="img/2.jpg" />
+			</li>
+		</ul>-->
+		<footer class="footer">
+		</footer>
+		<span class="next hover">></span>
+		<span class="prev"><</span>
+	</div>
+</body>
+<script src="js/jquery-3.1.1.js"></script>
+<script>
+var data = ['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg'];
+$(function(){
+	var $parent = $('#imgTab');
+	var $footer = $parent.find('.footer');
+	var W = $parent.innerWidth();
+	var num = 0;
+	var timer = null;
+	
+	creatEle();//生成数据
+	cirClick();//点击原点切换图片
+	fnTimer();//定时器切换图片
+	$parent.find('.next').on('click',fnNext);//点击切换下一张
+	$parent.find('.prev').on('click',fnPrev);//点击切换上一张
+	
+	$parent.on({'mouseover':function(){
+			clearInterval(timer);
+		},'mouseout':function() {
+			fnTimer();
+		}
+	})
+	
+	function creatEle() {
+		$ul = $('<ul></ul>')
+		$ul.css('width',(data.length+1)*W);
+		for ( var i=0; i<data.length; i++ ) {
+			$li = $('<li style="left:'+i*W+'px;"><img src="'+data[i]+'" /></li>');
+			$li.appendTo($ul);
+			if ( i == num ) {
+				$footer.append($('<span class="active"></span>'));
+			} else {
+				$footer.append($('<span></span>'));
+			}
+		}
+		$li = $('<li style="left:'+i*W+'px;"><img src="'+data[0]+'" /></li>');
+		$li.appendTo($ul);
+		$parent.append($ul);
+	}
+	
+	//定时器轮播图
+	function fnTimer() {
+		timer = setInterval(fnNext,1000);
+	}
+	
+	
+	//点击原点切换图片
+	function cirClick() {
+		$footer.find('span').on('click',function(){
+			num = $(this).index();
+			showImg(num);
+		})
+	}
+	//上一张切换
+	function fnPrev() {
+		num --;
+		if ( num < 0 ) {
+			num = data.length-1;
+			$parent.find('ul').css('left',-data.length*W);
+		}
+		showImg (num);
+	}
+	
+	//下一张切换
+	function fnNext() {
+		num++;
+		if (num > data.length) {
+			num = 1;
+			$parent.find('ul').css('left',0);
+		}
+		showImg (num);
+	}
+	//图片运动切换的图片
+	function showImg (num) {
+		$parent.find('ul').animate({'left':-num*W},600);
+		$footer.find('span').removeClass('active').eq(num%data.length).addClass('active');
+	}
+})
+</script>
+</html>

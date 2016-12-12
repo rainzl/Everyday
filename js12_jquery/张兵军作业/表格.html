@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style type="text/css">
+ul {
+	margin: 60px auto 10px;
+	padding: 0;
+	list-style: none;
+	width: 600px;
+	text-align: center;
+}
+td{
+	text-align: center;
+}
+li {
+	padding: 10px 0;
+	overflow: hidden;
+}
+label {
+	display: inline-block;
+}
+input[type="text"] {
+	border: 1px solid #ccc;
+	width: 80px;
+	height: 20px;
+}
+.active {
+	background-color: #87CEEB;
+}
+#tab tbody tr:hover {
+	background-color: #87CEEB;
+}
+</style>
+</head>
+<body>
+<section>
+	<ul id="header">
+		<li class="addPre">
+			<label>商品名： <input type="text" name="" /></label>
+			<label>价格： <input type="text" /></label>
+			<input type="button" value="添加" />
+		</li>
+		<li>
+			<span>排序</span>
+			<select>
+				<option index="price">价格</option>
+				<option index="id">编号</option>
+			</select>
+			<select>
+				<option index='2'>从高到底</option>
+				<option index='1'>从低到高</option>
+			</select>
+			<input type="button" value="提交" />
+			<input type="button" value="批量删除" />
+		</li>
+	</ul>
+	<table id="tab" width="600" align="center" border="1">
+		<thead>
+			<th>全选<input type="checkbox" id="checkAll"></th>
+			<th index="id">编号</th>
+			<th>商品</th>
+			<th index="price">价格</th>
+			<th>操作</th>
+		</thead>
+		<tbody>
+			<!--<tr>
+				<td><input type="checkbox"></td>
+				<td>苹果</td>
+				<td>3700</td>
+				<td>1000</td>
+				<td>
+					<input type="button" value="删除"/>
+					<input type="button" value="上移">
+					<input type="button" value="下移">
+				</td>
+			</tr>-->
+		</tbody>
+	</table>	
+</section>
+</body>
+
+<script src="js/jquery-3.1.1.js"></script>
+<script src="js/mYtools.js"></script>
+<script>
+var data = [
+    {
+        'id' : 1,
+        'name' : '苹果',
+        'price' : 3600
+    },
+    {
+        'id' : 2,
+        'name' : '小米',
+        'price' : 4000
+    },
+    {
+        'id' : 3,
+        'name' : '诺基亚',
+        'price' : 2000
+    },
+    {
+        'id' : 4,
+        'name' : '三星',
+        'price' : 100
+    },
+    {
+        'id' : 5,
+        'name' : '华为',
+        'price' : 3500
+    }
+]
+$(function(){
+	var $header = $('#header');
+	var $tab = $('#tab').find('tbody').eq(0);
+	var $checkAll = $('#checkAll');
+	var arr = [];
+	
+	creatTab();//生成数据
+	fnAddPre();//添加商品
+	fnAddSort();//排序
+	
+	//生成页面数据
+	function creatTab() {
+		$tab.html('');
+		for ( var i=0; i<data.length; i++ ) {
+    		var $tr = $('<tr><td><input type="checkbox"></td></tr>');
+    		var $tdId = $('<td>'+data[i].id+'</td>');
+    		var $tdName = $('<td>'+data[i].name+'</td>');
+    		var $tdPrice = $('<td>'+data[i].price+'</td>');
+    		var $tdBtns = $('<td><input type="button" value="删除"/><input type="button" value="上移"/><input type="button" value="下移" /></td>');
+    		
+    		addEvent($tdBtns);//给列表中的每个按钮添加事件函数
+    		
+    		$tr.attr('file-id',data[i].id).append($tdId).append($tdName).append($tdPrice).append($tdBtns);
+    		$tab.append($tr);
+    	}
+		arr.length == $tab.find('tr').length? $checkAll.prop('checked',true): $checkAll.prop('checked',false);
+		fnDeleAll();
+	}
+	
+
+	//添加排序函数
+	function fnAddSort() {
+		var $li = $header.children().eq(1);
+		var $input = $li.find('input').eq(0);//提交按钮
+		var $condition = $li.find('select').eq(0);
+		var $order = $li.find('select').eq(1);
+		
+		$input.click(function(){
+			var index = getIndex($condition);
+			var order = getIndex($order);
+			var $tdIndex = $('#tab').find('[index="'+index+'"]').index();
+			fnSort($tdIndex,order)
+		});
+	}
+	//获取select的index
+	function getIndex(select) {
+		var $option = select.find('option');
+		var index = null;
+		$option.each(function(i,item){
+			if ( select.val() == $(item).val() ) {
+				index = $(item).attr('index');
+			}
+		})
+		return index;
+	}
+	//排序函数
+	function fnSort(index,order) {//order: (1:从高到底; 2:从低到高) index:判断根据第几列排序
+		var arr = [];//存储每一行
+		$tab.find('tr').each(function(i,item){
+			arr.push(item);
+		})
+		if (order == 1) {
+			arr.sort(function(a,b){
+				return $(a.cells[index]).html() - $(b.cells[index]).html(); //1:从高到低
+			})
+		} else {
+			arr.sort(function(a,b){
+				return $(b.cells[index]).html() - $(a.cells[index]).html(); //2:从低到高
+			})
+		}
+		for ( var i=0; i<arr.length; i++ ) {
+			$tab.append(arr[i]);
+		}
+	}
+	//输入添加商品
+	function fnAddPre() {
+		var $input = $header.children().eq(0).find('input');
+		$input.eq($input.length-1).click(function(){
+			var name = $input.eq(0).val();
+			var price = $input.eq(1).val();
+			var sal = $input.eq(2).val();
+			var id = findMinNUm(data,'id')
+			if ( isNaN(parseInt(price)) ) {
+				alert('请输入数字')
+				return;
+			}
+			data.push({
+				'id' : ++id,
+		        'name' : name,
+		        'price' : price
+			})
+			creatTab();
+		});
+	}
+	//查找最大的id
+	function findMinNUm(arr,id) {
+		var num = -100;
+		for ( var i=0; i<arr.length; i++ ) {
+			num = Math.max(arr[i][id],num);
+		}
+		return num;
+	}
+	//设置上移，下移，删除的功能
+	function addEvent(td) {
+		var $input = td.children();
+		//删除
+		$input.eq(0).click(function(ev){
+			$(this).closest('tr').remove();
+			ev.stopPropagation();
+		})
+		//上移
+		$input.eq(1).click(function(ev){
+			var $tr = $(this).closest('tr');
+			$tr.after($tr.prev());
+			ev.stopPropagation();
+		})
+		//下移
+		$input.eq(2).click(function(ev){
+			var $tr = $(this).closest('tr');
+			$tr.before($tr.next());
+			ev.stopPropagation();
+		})
+	}
+	//删除全部
+	function fnDeleAll() {
+		var $deleBtn = $header.children().eq(1).find('input').eq(1);//删除按钮
+		var $trs = $tab.find('tr'); //所有商品列
+		var $btns = $trs.find('td:eq(0) input');//商品列中的每个选框
+		arr = []; //存放已经被选中的数据
+		
+		//循环给tr和选框添加交互函数
+		$trs.each(function(i,item){
+			$trs[i].onOff = true;
+			$btns[i].index = i;
+			//tr的交互函数
+			$(item).click(function(){
+				fnChose($(this).index())
+			})
+			//选框的交互函数
+			$($btns[i]).click(function(ev){
+				fnChose(this.index)
+				ev.stopPropagation();
+			})
+		})
+		checkAllClick();//全选按钮的交互
+		deleBtnClick();//删除按钮的交互
+		
+		
+		//tr和选框的交互函数
+		function fnChose(index) {
+			if ($trs[index].onOff) {
+				checked(index);
+			} else {
+				noChecked(index);
+			}
+			arr.length == $trs.length? $checkAll.prop('checked',true): $checkAll.prop('checked',false);
+		}
+		
+		//选中时需要执行的操作
+		function checked(index) {
+			$btns.eq(index).prop('checked',true);
+			$trs.eq(index).addClass('active');
+			arr.push($trs.eq(index));
+			$trs[index].onOff = false;
+		}
+		//取消选中时需要执行的操作
+		function noChecked(index) {
+			$btns.eq(index).prop('checked',false);
+			$trs.eq(index).removeClass('active');
+			var num = tools.arrIndexOf($trs.eq(index),arr);
+			
+			arr.length == 1? arr=[]: arr.splice(num,1);
+			$trs[index].onOff = true;
+		}
+		//全选按钮的点击
+		function checkAllClick() {
+			$checkAll.off('click').on('click',function(){
+				console.log(arr.length,$trs.length)
+				if ( arr.length == $trs.length ) {
+					$checkAll.prop('checked',false);
+					arr = [];
+					$trs.each(function(i,item){
+						$btns.eq(i).prop('checked',false);
+						$(item).removeClass('active');
+						$trs[i].onOff = true;
+					})
+				} else {
+					$checkAll.prop('checked',true);
+					arr = [];
+					$trs.each(function(i,item){
+						checked(i);
+					})
+				}
+			});
+		}
+		//点击删除
+		function deleBtnClick() {
+			$deleBtn.on('click',function(){
+				if ( arr.length > 0 ) {
+					for ( var i=arr.length-1; i>=0; i-- ) {
+						var id = arr[i].attr('file-id');
+						var num = findIndex(data,id);
+						if ( num != -1 ) {
+							data.length == 1? data=[]: data.splice(num,1);
+						}
+						arr[i].remove();
+						arr.length = arr.length-1;
+					}
+				}
+				
+			})
+		}
+	}
+	//查找指定id在数据中的位置
+	function findIndex(arr,id) {
+		var num = -1;
+		for ( var i=0; i<arr.length; i++ ) {
+			if ( arr[i].id == id ) {
+				num = i;
+			}
+		}
+		return num;
+	}
+})
+</script>
+</html>

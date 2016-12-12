@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+p,
+h2 {
+	margin: 0;
+}
+.wrap {
+	overflow: hidden;
+	margin: 10px auto;
+	width: 1000px;
+}
+h2 {
+	float: left;
+}
+#stars {
+	float: left;
+}
+#stars li {
+	float: left;
+	width: 26px;
+	height: 28px;
+	padding-left: 5px;
+	background: url(img2/star-1.png) no-repeat;
+	cursor: pointer;
+}
+#stars .grey {
+	background: url(img2/star-2.png) no-repeat;
+}
+#stars .yellow {
+	background: url(img2/star-3.png) no-repeat;
+}
+#title {
+	float: left;
+	margin-left: 10px;
+}
+</style>
+	
+</head>
+<body>
+	<section class="wrap">
+		<h2>总体评价：</h2>
+		<ul id="stars">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<img src="img2/title-1.png" />
+		<p id="title"></p>
+	</section>
+</body>
+<!--1. 鼠标移入某个星星
+	此星星及以前的星星颜色改变：小于三颗时背景都为灰色，大于等于三颗时背景都为黄色。评价栏显示此星星对应的评价
+	此星星以后的星星颜色不变。
+2. 鼠标移出某个星星
+	若被点击过，点击之前的星星背景颜色改变。评价栏显示此星星对应的评价
+	若没有被点击过，所有星星恢复之前的背景颜色。评价栏显示提示信息
+3. 鼠标点击某颗星星。
+	记录此颗星星的下标。-->
+<script src="js/jquery-3.1.1.js"></script>
+<script>
+var arr = ['很差','较差','还行','推荐','力荐'];
+$(function(){
+	var $stars = $('#stars').find('li');
+	var $title = $('#title');
+	var num = -1;
+	$stars.on({'click':function(){
+				fnChose($(this).index());
+				num = $(this).index();
+			},
+			'mouseover':function(){
+				fnChose($(this).index());
+			},
+			'mouseout':function(){
+				if (num!=-1) {
+					fnChose(num);
+				} else {
+					$stars.removeClass('yellow grey');
+					$title.html('').prev().show();
+				}
+			}
+	})
+	
+	function fnChose(index) {
+		$stars.removeClass('yellow grey');
+		if ( index>=2 ) {
+			$('#stars').find('li:lt('+index+')').addClass('yellow');
+			$stars.eq(index).addClass('yellow');
+		} else {
+			$('#stars').find('li:lt('+index+')').addClass('grey');
+			$stars.eq(index).addClass('grey');
+		}
+		$title.html(arr[index]).prev().hide();
+	}
+})
+</script>
+</html>
