@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <script>
+          window.onload = function() {
+            var add = document.getElementById("add");
+            var onumber = document.getElementById("number");
+            var subduction = document.getElementById("subduction");
+            var a = 0;
+            onumber.value = a;
+            add.onclick = function () {
+              a++;
+              if(a==6) {
+                a = 0;
+              }
+              onumber.value = a;
+            }
+            subduction.onclick = function () {
+              a--;
+              if ( a == -1 ) {
+                a = 5;
+              }
+              onumber.value = a;
+            }
+          }
+        </script>
+    </head>
+    <body>
+      <input type="button" value="+" id="add">
+      <input type="text" id="number">
+      <input type="button" value="-" id="subduction">
+    </body>
+</html>

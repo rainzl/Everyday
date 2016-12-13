@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style>
+body {
+	margin: 0;
+}
+</style>
+<script>
+	window.onload = function () {
+		var oAdd = document.getElementById('add');
+		var oNum = document.getElementById('num');
+		var oSub = document.getElementById('sub');
+		var num = 0;
+		oAdd.onclick = function () {
+			num = num + 1;
+			oNum.value = num;
+			if ( num == 5 ) {
+				num = -1;
+			}
+		}
+		oSub.onclick = function () {
+			num --;
+			oNum.value = num;
+			if ( num == 0 ) {
+				num = 6;
+			}
+		}
+		
+	}
+</script>
+</head>
+<body>
+	<section>
+		<input type="button" id="add" value="+" />
+		<input type="text" id="num" value="0" />
+		<input type="button" id="sub" value="-" />
+	</section>
+</body>
+</html>

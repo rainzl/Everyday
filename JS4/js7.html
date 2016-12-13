@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body {
+				background-color: #7C7C7C;
+			}
+			
+			p {
+				margin: 0;
+			}
+			
+			.wrap {
+				margin: 30px auto;
+				padding: 20px;
+				width: 600px;
+				background-color: #FFFFFF;
+				text-align: center;
+				font: 16px/36px "宋体";
+			}
+			
+			#btn input {
+				margin: 0 20px;
+				cursor: pointer;
+			}
+			
+			.content {
+				position: relative;
+				margin: 0 auto;
+				width: 500px;
+				height: 384px;
+				border: 15px solid #D7EFFE;
+			}
+			
+			#img {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.content p {
+				position: absolute;
+				width: 100%;
+				background-color: rgba(0, 0, 0, .4);
+				color: #fff;
+			}
+			
+			#topText {
+				top: 0;
+			}
+			
+			#bottomText {
+				bottom: 0;
+			}
+			
+			.content span {
+				position: absolute;
+				top: 150px;
+				width: 50px;
+				height: 50px;
+				font: bold 30px/50px "宋体";
+				background-color: rgba(255, 0, 0, .3);
+				color: #fff;
+				cursor: pointer;
+			}
+			
+			.content span:hover {
+				background-color: rgba(255, 0, 0, .5);
+			}
+			
+			#prev {
+				left: 10px;
+			}
+			
+			#next {
+				right: 10px;
+			}
+		</style>
+		<script>
+			window.onload = function() {
+				var oBtns = document.getElementById('btn');
+				var aBtn = oBtns.getElementsByTagName('input');
+				var oHeadText = document.getElementById('headText');
+				var oImg = document.getElementById('img');
+				var oTopText = document.getElementById('topText');
+				var oBottomText = document.getElementById('bottomText');
+				var oPrev = document.getElementById('prev');
+				var oNext = document.getElementById('next');
+				var aRrImg = ['img1/1.jpg', 'img1/2.jpg', 'img1/3.jpg', 'img1/4.jpg', 'img1/5.jpg'];
+				var aRrText = ['小白兔', '小黑猫', '混合装小猫', '小白狗', '小花猫'];
+				var num = 0;
+
+				var flag = true;
+
+				//页面初始化
+				docContent(); 
+				oHeadText.innerHTML = '图片可从最后一张跳转到第一张循环切换';
+				
+				
+				//点击循环切换按钮flag为true
+				aBtn[0].onclick = function() {
+					flag = true;
+					oHeadText.innerHTML = '图片可从最后一张跳转到第一张循环切换';
+				}; 
+				
+				
+				//点击顺序切换按钮flag为flase
+				aBtn[1].onclick = function() {
+					flag = false;
+					oHeadText.innerHTML = '图片只能到最后一张或只能到第一张切换';
+				}; 
+				
+				//上一张点击事件，根据flag判断
+				oPrev.onclick = function() {
+					num--;
+					if(num < 0){
+						flag? num = aRrImg.length - 1: num = 0; alert('前面没有图片啦') ;
+					}
+					docContent();
+				}
+				
+				
+				//下一张点击事件
+				oNext.onclick = function() {
+					num++;
+					if ( num > (aRrImg.length - 1) ) {
+						flag? num = 0: num = aRrImg.length - 1; alert('后面没有图片啦');
+					}
+					docContent();
+				}
+
+				
+				//页面内容显示函数
+				function docContent() {
+					oImg.src = aRrImg[num];
+					oTopText.innerHTML = num + 1 + '/' + aRrImg.length;
+					oBottomText.innerHTML = aRrText[num];
+				}
+
+			}
+		</script>
+	</head>
+
+	<body>
+		<section class="wrap">
+			<header>
+				<div id="btn">
+					<input type="button" value="循环切换" />
+					<input type="button" value="顺序切换" />
+				</div>
+				<p id="headText"></p>
+				<div class="content">
+					<img id="img" />
+					<p id="topText"></p>
+					<p id="bottomText">文字描述</p>
+					<span id="prev"><</span>
+					<span id="next">></span>
+				</div>
+			</header>
+		</section>
+	</body>
+
+</html>

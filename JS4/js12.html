@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+input{
+	cursor: pointer;
+}
+#box {
+	position: relative;
+}
+#box div {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	background-color: #DED6E7;
+	text-align: center;
+	font: bold 50px/100px "宋体";
+	color: #fff;
+}
+</style>
+<script>
+	window.onload = function () {
+		var oInput = document.getElementsByTagName('input')[0];
+		var oBox = document.getElementById('box');
+		var aDiv = oBox.getElementsByTagName('div');
+		var num = 7;
+		var vNum = 0;
+		var z = 0;
+		var onOff = true;
+		
+		
+		
+		oInput.onclick = function () {
+			if (onOff) {
+				for ( i=0; i<num; i++ ) {
+					oBox.innerHTML += '<div>'+ (i+1) +'</div>';
+				}
+				onOff = false;
+			}
+			z++;
+			top();
+			if ( z == 4 ) {
+				z = 0;
+			}
+		};
+		function top() {
+			for ( i=0; i<num; i++ ) {
+				vNum = i;
+				if ( z == 1 ) {
+					aDiv[i].style.left = i*100 + 'px';
+					if ( vNum < num/2 ) {
+						vNum = i;
+					} else {
+						vNum = num - 1 - i;
+					}
+					aDiv[i].style.top = 100*vNum + 'px';
+				} else if ( z == 2 ) {
+					aDiv[i].style.left = i*100 + 'px';
+					if ( vNum > num/2 ) {
+						vNum = i;
+					} else {
+						vNum = num - 1 - i;
+					}
+					aDiv[i].style.top = 100*(vNum-(num-1)/2) + 'px';
+				} else if ( z == 3 ) {
+					aDiv[i].style.top = i*100 + 'px';
+					if ( vNum < num/2 ) {
+						vNum = num - 1 - i;
+					} else {
+						vNum = i;
+					}
+					aDiv[i].style.left = 100*(vNum-(num-1)/2) + 'px';
+				} else if ( z == 4 ) {
+					aDiv[i].style.top = i*100 + 'px';
+					if ( vNum < num/2 ) {
+						vNum = i;
+					} else {
+						vNum = num - 1 - i;
+					}
+					aDiv[i].style.left = 100*vNum + 'px';
+				}
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="button" value="按钮" />
+	<div id="box"></div>
+</body>
+</html>

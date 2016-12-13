@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+body {
+	background-color: #90908F;
+}
+body,
+p,
+h2 {
+	margin: 0;
+}
+.wrap {
+	margin: 30px auto;
+	width: 500px;
+	height: 384px;
+	padding: 86px 50px 30px; 
+	background: url(tabImg/bg2.jpg) no-repeat #fff;
+}
+#content {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	text-align: center;
+}
+#content h2 {
+	position: absolute;
+	top: -50px;
+	left: 0;
+	height: 50px;
+	width: 100%;
+	background-color: rgba(0,0,0,.5);
+	color: #fff;
+	font: bold 30px/50px "楷体";
+}
+#content div img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: url(tabImg/loader_ico.gif) no-repeat center center;
+	opacity: 0;
+	transition: all .8s;
+}
+#content>span {
+	position: absolute;
+	top: 150px;
+	width: 50px;
+	height: 50px;
+	background:url(tabImg/bg3.png) no-repeat;
+	opacity: .5;
+	font: bold 40px/50px "楷体";
+	color: #fff;
+	display: none;
+}
+#content .spanHover {
+	opacity: .8;
+}
+#content span:nth-of-type(1) {
+	left: 20px;
+}
+#content span:nth-of-type(2) {
+	right: 20px;
+}
+#btmRound {
+	position: absolute;
+	bottom: 20px;
+	left: 0;
+	width: 100%;
+	height: 20px;
+}
+#btmRound a {
+	position: relative;
+	display: inline-block;
+	margin: 0 5px;
+	width: 10px;
+	height: 10px;
+	background: url(tabImg/bg1.png) no-repeat 0 0;
+} 
+#btmRound .aActive {
+	background: url(tabImg/bg1.png) no-repeat 0 -10px;
+}
+#btmRound a span {
+	display: none;
+}
+#btmRound a .show {
+	display: inline;
+}
+#btmRound a mark {
+	position: absolute;
+	bottom: 8px;
+	left: 0;
+	border: 5px solid;
+	border-color: #fff transparent transparent; 
+	width: 0;
+	background: none;
+}
+#btmRound a img {
+	position: absolute;
+	bottom: 18px;
+	left: -60px;
+	width: 130px;
+	height: 100px;
+	padding: 5px;
+	background-color: #fff;
+}
+
+</style>
+<!--功能分析
+1. 点击左右按钮，可以循环切换图片。
+2. 鼠标移入下标原点，显示对应图片的缩略图
+3. 点击下标原点，切换至对应图片。同时下标原点背景切换为aActive-->
+
+<script>
+var aRr = ['tabImg/1.jpg','tabImg/2.jpg','tabImg/3.jpg','tabImg/4.jpg','tabImg/5.jpg'];
+	window.onload = function () {
+		var oContent = document.getElementById('content');
+		var oH2 = document.querySelector('#content h2');
+		var aSpans = document.querySelectorAll('#content>span');
+		var oDiv = document.querySelector('#content div');
+		var aP = document.querySelector('#content p');
+		
+		var num = 0;
+		var sTrImgMax = '';
+		var sTrImgMin = '';
+		
+		//页面内容生成
+		for ( var i=0,len=aRr.length; i<len; i++ ) {
+			sTrImgMax += '<img src="' + aRr[i] + '" />';
+			sTrImgMin += '<a href="javascript:;"><span><mark></mark><img src="' + aRr[i] + '" /></span></a>';
+		}
+		oDiv.innerHTML = sTrImgMax;
+		aP.innerHTML = sTrImgMin;
+		
+		var aPSpan = aP.querySelectorAll('#btmRound span');
+		var aAs = aP.querySelectorAll('#btmRound a');
+		var aImg = oDiv.getElementsByTagName('img');
+		
+		//初始化页面
+		aAs[num].className = 'aActive';
+		aImg[num].style.opacity = '1';
+		oContent.onmouseover = function () {
+			aSpans[0].style.display = aSpans[1].style.display = 'inline';
+		}
+		oContent.onmouseout = function () {
+			aSpans[0].style.display = aSpans[1].style.display = 'none';
+		}
+		aSpans[0].onclick = function () {
+			num --;
+			if ( num < 0 ) {
+				num = len -1;
+			}
+			fnImg();
+		}
+		aSpans[1].onclick = function () {
+			num ++;
+			if ( num > len - 1 ) {
+				num = 0;
+			}
+			fnImg();
+		}
+		for ( i=0; i<aSpans.length; i++ ) {
+			aSpans[i].onmouseover = function () {
+				this.className = 'spanHover';
+			}
+			aSpans[i].onmouseout = function () {
+				this.className = '';
+			}
+		}
+		for (var i=0; i<len; i++) {
+			aAs[i].index = i;
+			aAs[i].onmouseenter = function () {
+				aSpans[0].style.display = aSpans[1].style.display = 'none';
+				num = this.index;
+				fnImg();
+				aPSpan[num].className = 'show';
+				
+			}
+			aAs[i].onmouseleave = function () {
+				aPSpan[this.index].className = '';
+			}
+			/*aAs[i].onclick = function () {
+				num = this.index;
+				fnImg();
+			}*/
+		}
+		
+		
+		function fnImg() {
+			for ( var i=0; i<len; i++ ) {
+				aAs[i].className = '';
+				aImg[i].style.opacity = '0';
+			}
+			aAs[num].className = 'aActive';
+			aImg[num].style.opacity = '1';
+		}
+	}
+</script>
+</head>
+<body>
+<section class="wrap">
+	<div id="content">
+		<h2>萌宠图片</h2>
+		<div><img src="tabImg/1.jpg" /></div>
+		<span><</span>
+		<span>></span>
+		<p id="btmRound"><a><span><img src="tabImg/1.jpg"><mark></mark></span></a></p>
+	</div>
+</section>
+</body>
+</html>

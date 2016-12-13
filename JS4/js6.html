@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style>
+input {
+	outline: none;
+}
+.wrap {
+	position: relative;
+	margin: 30px auto;
+	width: 361px;
+	height: 741px;
+	background: url(img/1.png) no-repeat ;
+}
+.content {
+	position: absolute;
+	top: 107px;
+	left: 32px;
+	width: 297px;
+	height: 525px;
+	background: url(img/1.jpg) no-repeat #292a21;
+}
+#articale {
+	overflow: auto;
+	width: 100%;
+	height: 462px;
+	font: 14px/24px "宋体";
+}
+#articale>div {
+	margin-top: 5px;
+}
+.footer {
+	overflow: hidden;
+	padding-top: 8px;
+	width: 100%;
+	height: 50px;
+	border-top: 1px solid #cedad5;
+	background-color: rgba(255,255,255,.5);
+}
+#img {
+	float: left;
+	margin-left: 4px;
+	padding: 6px 4px;
+	width: 30px;
+	height: 30px;
+	border: 1px solid #e8e2ee;
+	border-radius: 10px;
+}
+#text {
+	float: left;
+	margin-left: 4px;
+	padding: 6px 5px;
+	width: 165px;
+	height: 30px;
+	border: 1px solid #e8e2ee;
+	border-radius: 10px;
+	font: 16px/30px "宋体";
+}
+#sub {
+	float: left;
+	height: 42px;
+	border: none;
+	background: none;
+	font: 28px/42px "宋体";
+	color: #8c8494;
+	cursor: pointer;
+}
+.textRight {
+	float: right;
+	width: 100%;
+}
+.textRight span {
+	float: right;
+	width: 30px;
+	height: 30px;
+	background: url(img/2.png) no-repeat 8px 8px;
+}
+.textRight div {
+	float: right;
+	padding: 5px;
+	max-width: 220px;
+	background-color: #21c618;
+	border-radius: 5px;
+	word-break: break-all;
+}
+.textLeft {
+	float: left;
+	width: 100%;
+}
+.textLeft span {
+	float: left;
+	margin-right: 6px;
+	width: 30px;
+	height: 30px;
+	background: url(img/3.png) no-repeat 8px 8px;
+}
+.textLeft div {
+	float: left;
+	padding: 5px;
+	max-width: 220px;
+	background-color: #ded6e7;
+	border-radius: 5px;
+	word-break: break-all;
+}
+</style>
+<script>
+	window.onload = function () {
+		//获取元素
+		var oArticale = document.getElementById('articale');
+		var oImg = document.getElementById('img');
+		var oText = document.getElementById('text');
+		var oSub = document.getElementById('sub');
+		var onOff = true;
+		//图片点击事件：onOff为真显示2.png；onOff为假显示3.png
+		oImg.onclick = function () {
+			onOff = !onOff;
+			return onOff? oImg.src = 'img/2.png': oImg.src = 'img/3.png';
+			/*if ( onOff) {
+				oImg.src = 'img/2.png';
+			} else {
+				oImg.src = 'img/3.png';
+			}*/
+		}
+		//图片点击事件：onOff为真显示2.png，文字居右；onOff为假显示3.png，文字居左；
+		oSub.onclick = function () {
+			if ( oText.value == '' || oText.value == ' ' ) {
+				alert('随便输点什么吧……');
+			} else if ( onOff ) {
+				oArticale.innerHTML = '<div class="textRight"><span></span><div>' + oText.value + '</div></div>' +oArticale.innerHTML;
+			} else {
+				oArticale.innerHTML = '<div class="textLeft"><span></span><div>' + oText.value + '</div></div>' +oArticale.innerHTML;
+			}
+			oText.value = '';
+		}
+	}
+</script>
+</head>
+<body>
+	<section class="wrap">
+		<div class="content">
+			<div id="articale"></div>
+			<div class="footer">
+				<img id="img" src="img/2.png" />
+				<input type="text" id="text" />
+				<input type="submit" id="sub" value="发送" />
+			</div>
+		</div>
+	</section>
+</body>
+</html>
